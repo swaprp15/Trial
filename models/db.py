@@ -63,6 +63,14 @@ auth.settings.reset_password_requires_verification = True
 from gluon.contrib.login_methods.rpx_account import use_janrain
 use_janrain(auth, filename='private/janrain.key')
 
+db.define_table('Hotel_Info',
+          Field('name', requires = IS_NOT_EMPTY()),
+          Field('address'),
+          Field('costPerTwo', 'decimal(10,2)'),
+          Field('hours'),
+          Field('overall_rating', 'decimal(2,1)'),
+          Field('no_of_reviewes', 'integer'))
+
 #########################################################################
 ## Define your tables below (or better in another model file) for example
 ##

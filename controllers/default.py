@@ -19,14 +19,18 @@ def index():
     return auth.wiki()
     """
     response.flash = T("Welcome CafeHunt!")
-    form=FORM(INPUT(_name='keyword'), INPUT(_type='submit'))
-    ##if form.process().accepted:
+    form=FORM(INPUT(_name='keyword', requiures=IS_NOT_EMPTY(), _placeholder='Please enter hotel name'), INPUT(_type='submit', _value='Search'))
+    #if form.process().accepted:
+    #    if form.accepts(request,session):
+    #       redirect(URL('search', args=[form.vars.keyword]))
     ##    redirect(URL('search'))
 
     if form.accepts(request,session):
         redirect(URL('search', args=[form.vars.keyword]))
 
-    return dict(message=T('Hello World'), form=form)
+    
+
+    return dict(message=T('Welcome to CafeHunt!!'), form=form)
 
 
 def user():
@@ -83,4 +87,5 @@ def data():
     return dict(form=crud())
 
 def search():
-    return dict(content=request.vars)
+    hotels = db(db.Hotel_Info).select()
+    return dict(content=hotels)

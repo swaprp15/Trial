@@ -5,8 +5,8 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(B('web',SPAN(2),'py'),XML('&trade;&nbsp;'),
-                  _class="brand",_href="http://www.web2py.com/")
+response.logo = A(B('CafeHunt'),XML('&trade;&nbsp;'),
+                  _class="brand",_href=URL('index'))
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 
@@ -37,8 +37,11 @@ def _():
     # shortcuts
     app = request.application
     ctr = request.controller
+
+    response.menu += [(T('City'), False, URL('default', 'index'), [])]
+
     # useful links to internal and external resources
-    response.menu += [
+    '''response.menu += [
         (SPAN('web2py', _class='highlighted'), False, 'http://web2py.com', [
         (T('My Sites'), False, URL('admin', 'default', 'site')),
         (T('This App'), False, URL('admin', 'default', 'design/%s' % app), [
@@ -135,6 +138,6 @@ def _():
                         ])
                 ]
          )]
-if DEVELOPMENT_MENU: _()
+if DEVELOPMENT_MENU: _()'''
 
 if "auth" in locals(): auth.wikimenu() 

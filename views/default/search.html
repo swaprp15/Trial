@@ -3,6 +3,10 @@
 
 {{if 'content' in globals():}}
 <h3>Keyword to search -- {{=request.args[0]}}</h3>
+{{for hotel in content:}}
+<p>{{=BEAUTIFY(hotel)}}</p>
+</br></br>
+{{pass}}
 {{else:}}
 {{=BEAUTIFY(response._vars)}}
 {{pass}}
