@@ -1,0 +1,18 @@
+<!--[if HTML5]><![endif]-->
+<!DOCTYPE html>
+<head>
+<title>{{=response.title or request.application}}</title>
+  <meta charset="utf-8" />
+
+  <!-- http://dev.w3.org/html5/markup/meta.name.html -->
+  <meta name="application-name" content="{{=request.application}}" />
+</head>
+
+<body>
+    <div>
+        {{=MENU(response.menu)}}
+    </div>
+    
+    {{include}}
+</body>
+</html>

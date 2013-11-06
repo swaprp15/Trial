@@ -1,0 +1,20 @@
+[2013-11-06 01:18:54] START
+[2013-11-06 01:21:31] EDIT Trial/views/layout.html: -89
+[2013-11-06 01:21:33] EDIT Trial/views/layout.html: 0
+[2013-11-06 01:21:59] EDIT Trial/views/layout.html: -35
+[2013-11-06 01:22:06] EDIT Trial/views/layout.html: -7
+[2013-11-06 01:22:17] EDIT Trial/views/layout.html: -6
+[2013-11-06 01:24:32] EDIT Trial/controllers/default.py: 2
+[2013-11-06 01:24:33] EDIT Trial/controllers/default.py: 0
+[2013-11-06 01:24:33] EDIT Trial/controllers/default.py: 0
+[2013-11-06 01:24:37] EDIT Trial/controllers/default.py: 0
+[2013-11-06 01:25:08] CREATE default/NewPage.html: 0
+[2013-11-06 01:25:36] EDIT Trial/views/default/NewPage.html: 3
+[2013-11-06 01:26:01] EDIT Trial/views/default/NewPage.html: -1
+[2013-11-06 01:26:08] EDIT Trial/views/default/NewPage.html: 1
+[2013-11-06 11:46:57] EDIT Trial/models/menu.py: 1
+[2013-11-06 11:48:05] EDIT Trial/views/layout.html: 3
+[2013-11-06 11:48:09] EDIT Trial/views/layout.html: 0
+[2013-11-06 11:49:25] EDIT Trial/models/menu.py: 1
+[2013-11-06 11:50:11] EDIT Trial/models/menu.py: 1
+[2013-11-06 11:50:43] EDIT Trial/models/menu.py: -1
