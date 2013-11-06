@@ -1,0 +1,20 @@
+div.restroType
+{
+	width: 100px;
+	height: 100px;
+	background-color: yellow;
+	border: 1px solid black;
+	float: left;
+}
+
+#categoryDiv
+{
+	height: 150px;
+	padding-bottom: 1px;
+}
+
+div#searchGroup
+{
+	width: 300px;
+	height: 100px;
+}

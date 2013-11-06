@@ -18,8 +18,15 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Welcome to web2py!")
-    return dict(message=T('Hello World'))
+    response.flash = T("Welcome CafeHunt!")
+    form=FORM(INPUT(_name='keyword'), INPUT(_type='submit'))
+    ##if form.process().accepted:
+    ##    redirect(URL('search'))
+
+    if form.accepts(request,session):
+        redirect(URL('search', args=[form.vars.keyword]))
+
+    return dict(message=T('Hello World'), form=form)
 
 
 def user():
@@ -74,3 +81,6 @@ def data():
       LOAD('default','data.load',args='tables',ajax=True,user_signature=True)
     """
     return dict(form=crud())
+
+def search():
+    return dict(content=request.vars)

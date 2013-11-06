@@ -1,0 +1,13 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'layout.html'}}
+
+{{if 'content' in globals():}}
+<h3>Keyword to search -- {{=request.args[0]}}</h3>
+{{else:}}
+{{=BEAUTIFY(response._vars)}}
+{{pass}}
+
+{{block right_sidebar}}
+{{=A(T("Adds will go here"), _href=URL('admin','default','index'), _class='btn',
+     _style='margin-top: 1em;')}}
+{{end}}
