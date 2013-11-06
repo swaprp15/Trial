@@ -24,8 +24,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), []),
-    (T('NewPage'), False, URL('default', 'NewPage'))
+    (T('Home'), False, URL('default', 'index'), [])
 ]
 
 DEVELOPMENT_MENU = True
@@ -33,8 +32,8 @@ DEVELOPMENT_MENU = True
 #########################################################################
 ## provide shortcuts for development. remove in production
 #########################################################################
-'''
- def _():
+
+def _():
     # shortcuts
     app = request.application
     ctr = request.controller
@@ -136,8 +135,6 @@ DEVELOPMENT_MENU = True
                         ])
                 ]
          )]
-    
-'''    
-#if DEVELOPMENT_MENU: _()
+if DEVELOPMENT_MENU: _()
 
-if "auth" in locals(): auth.wikimenu()
+if "auth" in locals(): auth.wikimenu() 
