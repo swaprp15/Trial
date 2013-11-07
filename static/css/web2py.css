@@ -141,7 +141,8 @@ div.error {
 .topbar {
     padding:10px 0;
     width:100%;
-    color:#959595;
+    /*color:#959595;*/
+    color: red;
     vertical-align:middle;
     padding:auto;
     background-image:-khtml-gradient(linear,left top,left bottom,from(#333333),to(#222222));

@@ -44,6 +44,11 @@ from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
+auth.settings.extra_fields['auth_user'] = [Field('photo', 'upload'),
+                                           Field('city', requires=IS_NOT_EMPTY())]
+
+
+
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 
@@ -66,10 +71,19 @@ use_janrain(auth, filename='private/janrain.key')
 db.define_table('Hotel_Info',
           Field('name', requires = IS_NOT_EMPTY()),
           Field('address'),
+          Field('city'),
           Field('costPerTwo', 'decimal(10,2)'),
           Field('hours'),
           Field('overall_rating', 'decimal(2,1)'),
           Field('no_of_reviewes', 'integer'))
+
+
+db.define_table('Review',
+          Field('user_id', 'reference auth_user', requires=IS_NOT_EMPTY()),
+          Field('hotel_id', 'reference Hotel_Info', requires=IS_NOT_EMPTY()),
+          Field('rating', 'decimal(2,1)', requires=IS_NOT_EMPTY()),
+          Field('time_of_post', 'datetime', requires=IS_NOT_EMPTY()),
+          Field('description', requires=IS_NOT_EMPTY()))
 
 #########################################################################
 ## Define your tables below (or better in another model file) for example

@@ -2,7 +2,7 @@
 {{extend 'layout.html'}}
 
 {{if 'content' in globals():}}
-<h3>Keyword to search -- {{=request.args[0]}}</h3>
+<h3>Search result for : {{=request.args[0]}}</h3>
 {{for hotel in content:}}
 <!--<p>{{=BEAUTIFY(hotel)}}</p>
 </br></br>

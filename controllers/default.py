@@ -94,10 +94,32 @@ def search():
 
     return dict(content=hotels)
 
+@auth.requires_login()
 def details():
+    #if adding a review
+    # /addReview/hotel_id
+
+    session.hotel_id = request.args[0]
+
+    addReviewForm=FORM(INPUT(_name='description', requiures=IS_NOT_EMPTY(), _placeholder='What\'s your opinion?'), INPUT(_type='submit', _value='Post it..'), INPUT(_type='reset', _value='reset'))
+
+    import datetime
+
+    if addReviewForm.accepts(request,session):
+        # /addReview/hotel_id
+        db.Review.insert(user_id=auth.user_id, hotel_id=session.hotel_id, rating=2.5, time_of_post=datetime.datetime.now(), description=addReviewForm.vars.description)
+
+        redirect(URL('details', args=[session.hotel_id]))
+    
+
     query=db.Hotel_Info.id == request.args[0]
     hotels = db(query).select()
     if len(hotels) == 0:
         hotels = ['Sorry, details are not available...']
 
-    return dict(details=hotels[0])
+    query=db.Review.hotel_id == session.hotel_id
+    reviews = db(query).select()
+    if len(reviews) == 0:
+        reviews = []
+
+    return dict(details=hotels[0], reviews=reviews, addReviewForm=addReviewForm)
