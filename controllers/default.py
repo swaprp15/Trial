@@ -123,3 +123,16 @@ def details():
         reviews = []
 
     return dict(details=hotels[0], reviews=reviews, addReviewForm=addReviewForm)
+
+def userDetails():
+    userId = request.args[0]
+
+    query = ((db.Review.user_id == userId) & (db.Review.hotel_id == db.Hotel_Info.id))
+
+    userReviews = db(query).select(db.Hotel_Info.name, db.Review.hotel_id, db.Review.description, db.Review.rating)
+
+    query = db.auth_user.id == userId
+
+    userInfo = db(query).select(db.auth_user.id, db.auth_user.first_name, db.auth_user.last_name, db.auth_user.photo)
+
+    return dict(userReviews=userReviews, id=userInfo[0].id, fname=userInfo[0].first_name, lname=userInfo[0].last_name, photo=userInfo[0].photo)

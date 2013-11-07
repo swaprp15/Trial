@@ -85,6 +85,12 @@ db.define_table('Review',
           Field('time_of_post', 'datetime', requires=IS_NOT_EMPTY()),
           Field('description', requires=IS_NOT_EMPTY()))
 
+
+'''db.define_table('User_Info',
+          Field('user_id', 'reference auth_user'),
+          Field('no_of_reviews', 'integer'))
+'''
+
 #########################################################################
 ## Define your tables below (or better in another model file) for example
 ##

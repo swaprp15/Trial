@@ -6,19 +6,19 @@
 	<p>Address : {{=details.address}}</p></br>
 	<p>Open for : {{=details.hours}}</p></br>
 	<p>Cost per two : {{=details.costPerTwo}}</p></br>
-	<p><a href='#'>{{=details.no_of_reviewes}} reviews</a></p></br>
+	<p><a href='#ReviewsBlock'>{{=details.no_of_reviewes}} reviews</a></p></br>
 	<p>Overall Rating : {{=details.overall_rating}}</p></br>
 	<p>Name : details.name</p></br>
 	<p>Name : details.name</p></br>
 </div>
 </br>
 
-<p style="font-weight:bold">Reviews</p>
+<p id="ReviewsBlock" style="font-weight:bold">Reviews</p>
+<a href="#writeReview">Write a review</a>
 {{for review in reviews:}}
 <div>
-	<p><a href='#'><b><i>{{=review.auth_user.first_name}} {{=review.auth_user.last_name}}</i></b></a></p></br>
+	<p><a href={{=URL('userDetails', args=[review.auth_user.id])}}><b><i>{{=review.auth_user.first_name}} {{=review.auth_user.last_name}}</i></b></a></p></br>
 	<img class="profilePic" src={{=URL('download',args=review.auth_user.photo)}}></img>
-	<p>{{=URL('uploads', review.auth_user.photo)}}</p>
 	<p>Rating : {{=review.Review.rating}}</p></br>
 	<p>When : {{=review.Review.time_of_post}}</p></br>
 	<p>Description : {{=review.Review.description}}</p></br>
@@ -26,7 +26,7 @@
 </div>
 {{pass}}
 
-<p>Write a review</p>
+<p id="writeReview">Write a review</p>
 {{=addReviewForm}}
 {{block right_sidebar}}
 {{=A(T("Adds will go here"), _href=URL('admin','default','index'), _class='btn',
