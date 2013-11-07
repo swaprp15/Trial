@@ -37,3 +37,70 @@ img.profilePic
 	width:50px;
 	height:50px;
 }
+
+/*  Zomato */
+
+.grid_8 {
+  width: 476px;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+.column {
+  margin: 0 10px;
+  float: left;
+}
+
+.alpha {
+  margin-left: 0px;
+}
+
+.search-name .top-res-box-name {
+  font-size: 18px;
+}
+.search-name .top-res-box-name a {
+  font-weight: bold;
+}
+
+.ln24 {
+  line-height: 24px;
+}
+
+.left {
+  float: left;
+}
+
+.clear {
+  clear: both;
+}
+
+.ln24 {
+  line-height: 24px;
+}
+
+.search-result-address {
+  color: #8D8D85;
+}
+
+.res-snippet-small-cuisine {
+  color: #8D8D85;
+  font-size: 12px;
+  text-transform: uppercase;
+  line-height: 19px;
+}
+
+.res-snippet-small-cuisine {
+  height: 24px;
+  line-height: 22px;
+}
+
+.grey-text {
+  color: #8D8D85;
+}
+
+.grid_4 {
+  width: 228px;
+}
+

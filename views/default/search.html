@@ -7,15 +7,40 @@
 <!--<p>{{=BEAUTIFY(hotel)}}</p>
 </br></br>
 -->
-<div id="hotelInfo">
-	<span id="hotelName">Name : <a href={{=URL('details', args=[hotel.id])}}>{{=hotel.name}}</a></span></br>
-	<p>Address : {{=hotel.address}}</p></br>
-	<p>Open for : {{=hotel.hours}}</p></br>
-	<p>Cost per two : {{=hotel.costPerTwo}}</p></br>
-	<p><a href='#'>{{=hotel.no_of_reviewes}} reviews</a></p></br>
-	<p>Overall Rating : {{=hotel.overall_rating}}</p></br>
-	<p>Name : hotel.name</p></br>
-	<p>Name : hotel.name</p></br>
+<div class="clear"></div>
+<div class="grid_8 pos-relative column alpha">
+	<div class="search-name">
+		<h3 class="top-res-box-name ln24 left"><a href={{=URL('details', args=[hotel.id])}}>{{=hotel.name}}</a></h3></br>
+		<div class="clear"></div>
+		<div class="ln24" style="line-height: 26px;">
+			<span class="search-result-address">{{=hotel.address}}</span>
+		</div>
+		<div class="res-snippet-small-cuisine" style="color: #4d4d4d;" title="European, North Indian, Mediterranean">European, North Indian, Mediterranean
+		</div>
+		<div class="ln24">
+			<span class="upc grey-text sml">Cost for 2:</span> {{=hotel.costPerTwo}}&nbsp;/&nbsp;
+			<span class="ln24"><span class="grey-text">Hours: </span>Timings : {{=hotel.hours}}</span>
+			<p><a href='#'></a></p></br>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="grid_4 column omega ta-right">
+	 <div class="search-result-stars ln24 clearfix">
+	 	<div class="right">
+            <div class="rating-rank left">
+            	<div data-res-id="90744" class="rating-for-90744 rating-div left res-snippet-small-rating level-7">
+                                {{=hotel.overall_rating}}
+                            </div>
+            </div>
+        </div>
+	 </div>
+	 <div class="clear"></div>
+	 <div class="right search-details-reviews" style="">
+        <a href="#" class="search-result-reviews right" title="User reviews for Exotica">{{=hotel.no_of_reviewes}} reviews</a>
+        <span data-icon="r" class="right search-result-review-icon"></span>
+     </div>
+     <div class="clear"></div>
 </div>
 </br>
 {{pass}}
