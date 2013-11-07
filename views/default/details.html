@@ -16,10 +16,12 @@
 <p style="font-weight:bold">Reviews</p>
 {{for review in reviews:}}
 <div>
-	<p><a href='#'><b><i>User : {{=review.user_id}}</i></b></a></p></br>
-	<p>Rating : {{=review.rating}}</p></br>
-	<p>When : {{=review.time_of_post}}</p></br>
-	<p>Description : {{=review.description}}</p></br>
+	<p><a href='#'><b><i>{{=review.auth_user.first_name}} {{=review.auth_user.last_name}}</i></b></a></p></br>
+	<img class="profilePic" src={{=URL('download',args=review.auth_user.photo)}}></img>
+	<p>{{=URL('uploads', review.auth_user.photo)}}</p>
+	<p>Rating : {{=review.Review.rating}}</p></br>
+	<p>When : {{=review.Review.time_of_post}}</p></br>
+	<p>Description : {{=review.Review.description}}</p></br>
 	</br>
 </div>
 {{pass}}

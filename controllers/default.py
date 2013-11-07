@@ -117,7 +117,7 @@ def details():
     if len(hotels) == 0:
         hotels = ['Sorry, details are not available...']
 
-    query=db.Review.hotel_id == session.hotel_id
+    query=((db.Review.hotel_id == session.hotel_id) & (db.Review.user_id == db.auth_user.id))
     reviews = db(query).select()
     if len(reviews) == 0:
         reviews = []
