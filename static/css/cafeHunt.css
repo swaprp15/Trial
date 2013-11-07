@@ -18,3 +18,16 @@ div#searchGroup
 	width: 300px;
 	height: 100px;
 }
+
+div#hotelInfo
+{
+	border: 1px solid black;
+	padding-left: 30px;
+}
+
+div span#hotelName
+{
+	color: red;
+	font-weight: bold;
+	padding-bottom: 50px;
+}

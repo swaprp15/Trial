@@ -87,5 +87,17 @@ def data():
     return dict(form=crud())
 
 def search():
-    hotels = db(db.Hotel_Info).select()
+    query=db.Hotel_Info.name.contains(request.args[0])
+    hotels = db(query).select()
+    if len(hotels) == 0:
+        hotels = ['Sorry no hotels found of your interest...']
+
     return dict(content=hotels)
+
+def details():
+    query=db.Hotel_Info.id == request.args[0]
+    hotels = db(query).select()
+    if len(hotels) == 0:
+        hotels = ['Sorry, details are not available...']
+
+    return dict(details=hotels[0])

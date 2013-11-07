@@ -4,8 +4,20 @@
 {{if 'content' in globals():}}
 <h3>Keyword to search -- {{=request.args[0]}}</h3>
 {{for hotel in content:}}
-<p>{{=BEAUTIFY(hotel)}}</p>
+<!--<p>{{=BEAUTIFY(hotel)}}</p>
 </br></br>
+-->
+<div id="hotelInfo">
+	<span id="hotelName">Name : <a href={{=URL('details', args=[hotel.id])}}>{{=hotel.name}}</a></span></br>
+	<p>Address : {{=hotel.address}}</p></br>
+	<p>Open for : {{=hotel.hours}}</p></br>
+	<p>Cost per two : {{=hotel.costPerTwo}}</p></br>
+	<p><a href='#'>{{=hotel.no_of_reviewes}} reviews</a></p></br>
+	<p>Overall Rating : {{=hotel.overall_rating}}</p></br>
+	<p>Name : hotel.name</p></br>
+	<p>Name : hotel.name</p></br>
+</div>
+</br>
 {{pass}}
 {{else:}}
 {{=BEAUTIFY(response._vars)}}
