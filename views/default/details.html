@@ -1,6 +1,7 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
 
+<!-- Hotel information-->
 <div class="clear"></div>
 <div class="grid_8 pos-relative column alpha">
 	<div class="search-name">
@@ -38,22 +39,59 @@
 </div>
 </br>
 
+<!-- Reviews -->
+
 <div class="clear"></div>
+
 <p id="ReviewsBlock" style="font-weight:bold">Reviews</p>
 <a href="#writeReview">Write a review</a>
+<br/>
+<br/>
 {{for review in reviews:}}
-<div>
-	<p><a href={{=URL('userDetails', args=[review.auth_user.id])}}><b><i>{{=review.auth_user.first_name}} {{=review.auth_user.last_name}}</i></b></a></p></br>
-	<img class="profilePic" src={{=URL('download',args=review.auth_user.photo)}}></img>
-	<p>Rating : {{=review.Review.rating}}</p></br>
-	<p>When : {{=review.Review.time_of_post}}</p></br>
-	<p>Description : {{=review.Review.description}}</p></br>
-	</br>
-</div>
+<div class="clear"></div>
+        <div class="grid_5 column alpha">
+            <div class="user-snippet">
+            	<div class="left profilePic">
+                	<img class="profilePic" src={{=URL('download',args=review.auth_user.photo)}} />
+            	</div>
+    			<div class="user-snippet-details left">
+        			<div class="user-snippet-name"><a href={{=URL('userDetails', args=[review.auth_user.id])}}><b>{{=review.auth_user.first_name}} {{=review.auth_user.last_name}}</b></a>
+        			</div>
+    			</div>
+			</div>
+        </div>
+        <div class="res-review-top-right">
+            <div class="res-review-top-right-rating">
+                                                <div class="left" style="background: none repeat scroll 0% 0% rgb(237, 237, 237);">
+                    <div class="right" itemprop="rating"><div class="small-rating level-7">{{=review.Review.rating}}</div></div>
+                    <div class="left" style="padding-right:20px;">
+                        <div style="color: rgb(157, 157, 157); letter-spacing:-0.5px;padding-left: 10px; line-height:12px;font-size: 10px; padding-top: 6px; text-transform: uppercase;">Rated as</div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="res-review-top-right-text">
+                                <a href="http://www.zomato.com/review/bbqMk" class="res-review-date">
+                    <time itemprop="dtreviewed" datetime="2013-05-19 11:21:29">{{=review.Review.time_of_post}}</time>
+                </a>
+		                                                                </div>
+                    </div>
+    </div>
+    <div data-review-id="201219" class="res-review-body clearfix" style="">
+        <div class="reviewDescription">
+            <p itemprop="description">{{=review.Review.description}}</p>
+        </div>
+    </div>
+    <div class="clear"></div>
 {{pass}}
 
+<div class="clear"></div>
+
+<div id="writeReviewBlock">
 <p id="writeReview">Write a review</p>
 {{=addReviewForm}}
+</div>
 {{block right_sidebar}}
 {{=A(T("Adds will go here"), _href=URL('admin','default','index'), _class='btn',
      _style='margin-top: 1em;')}}

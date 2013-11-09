@@ -45,7 +45,7 @@ def _():
     response.flash=session.city
 
     #if(session.city != 'Pune' and session.city != 'Hyderabad'):
-    session.city = 'Hyderabad'
+    #session.city = 'Hyderabad'
 
     response.menu += [
         (SPAN(session.city, _class='highlighted'), False, URL('index'), [

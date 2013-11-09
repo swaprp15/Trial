@@ -3,6 +3,7 @@
 
 {{if 'content' in globals():}}
 <h3>Search result for : {{=request.args[0]}}</h3>
+<h4>{{=response.flash}}</h4>
 {{for hotel in content:}}
 <!--<p>{{=BEAUTIFY(hotel)}}</p>
 </br></br>

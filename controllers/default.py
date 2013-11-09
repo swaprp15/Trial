@@ -51,6 +51,8 @@ def index():
 
     if len(request.vars) != 0:
         response.flash=request.vars['flash']
+    else:
+        response.flash = session.city
         
     return dict(message=T('Welcome to CafeHunt!!'), form=form)
 
@@ -109,15 +111,20 @@ def data():
     return dict(form=crud())
 
 def search():
+
+    if len(request.args) == 0:
+        redirect(URL('index'))
+
     # add a city filter here
-    query=db.Hotel_Info.name.contains(request.args[0]) 
+    query=(db.Hotel_Info.name.contains(request.args[0]) & (db.Hotel_Info.city == session.city))
 
     hotels = db(query).select(db.Hotel_Info.ALL)
 
-    response.flash = len(hotels)
+    #response.flash = len(hotels)
 
     if len(hotels) == 0:
-        hotels = ['Sorry no hotels found of your interest...']
+        response.flash = 'Sorry no hotels found of your interest in city ' + session.city
+        #hotels = [str]
 
     return dict(content=hotels)
 
