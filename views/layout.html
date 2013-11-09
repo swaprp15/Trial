@@ -69,7 +69,7 @@
 <body>
   <!-- Navbar ================================================== -->
   <div class="navbar navbar-inverse">
-    <!--<div class="flash">{{=response.flash or ''}}</div>-->
+    <div class="flash">{{=response.flash or ''}}</div>
     <div class="navbar-inner">
       <div class="container">
         {{is_mobile=request.user_agent().is_mobile}}
@@ -85,11 +85,7 @@
           {{if response.menu:}}
           {{=MENU(response.menu, _class='mobile-menu nav' if is_mobile else 'nav',mobile=is_mobile,li_class='dropdown',ul_class='dropdown-menu')}}
           {{pass}}
-          {{session.city = 'Pune'}}
-          {{if session.menu2 == None or len(session.menu2) == 0 :}}
-            {{session.menu2 = [(T(session.city), False, URL('default', 'index'), [(T('Hyderabad'), False, URL('default', 'index', args=['changeCity', 'Hyderabad'])),(T('Pune'), False, URL('default', 'index'))])]}}
-          {{pass}}
-          {{=MENU(session.menu2, _class='mobile-menu nav' if is_mobile else 'nav',mobile=is_mobile,li_class='dropdown',ul_class='dropdown-menu')}}
+
         </div><!--/.nav-collapse -->
       </div>
     </div>

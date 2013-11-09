@@ -18,7 +18,7 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Welcome CafeHunt!")
+    
     form=FORM(INPUT(_name='keyword', requiures=IS_NOT_EMPTY(), _placeholder='Please enter hotel name'), INPUT(_type='submit', _value='Search'))
     #if form.process().accepted:
     #    if form.accepts(request,session):
@@ -29,10 +29,29 @@ def index():
         redirect(URL('search', args=[form.vars.keyword]))
 
 
-    if request.vars[0] == 'changeCity':
-        session.city = request.vars[1]
-        session.menu2 = [(T(session.city), False, URL('default', 'index'), [(T('Hyderabad'), False, URL('default', 'index', args=['changeCity', 'Hyderabad'])),(T('Pune'), False, URL('default', 'index'))])]
-    
+    if request.args != []:
+        if request.args[0] == 'changeCity':
+            # check if this city is available..
+            cityQuery=db.Hotel_Info.city == request.args[1]
+            cityPresent=db(cityQuery).select(db.Hotel_Info.city)
+            if len(cityPresent) >= 1:
+                session.city = request.args[1]
+
+    response.menu = [
+    (T('Home'), False, URL('default', 'index'), [])]
+
+    response.menu += [
+        (SPAN(session.city, _class='highlighted'), False, URL('index'), [
+        (T('Hyderabad'), False, URL('index', args=['changeCity', 'Hyderabad'])),
+        (T('Pune'), False, URL('index', args=['changeCity', 'Pune'])),
+        (T('Mumbai'), False, URL('index', args=['changeCity', 'Mumbai']))])]
+
+    response.menu += [(SPAN('Add', _class='highlighted'), False, URL('index'), [
+        (T('Hotel'), False, URL('addHotel'))])]
+
+    if len(request.vars) != 0:
+        response.flash=request.vars['flash']
+        
     return dict(message=T('Welcome to CafeHunt!!'), form=form)
 
 
@@ -90,8 +109,13 @@ def data():
     return dict(form=crud())
 
 def search():
-    query=db.Hotel_Info.name.contains(request.args[0])
-    hotels = db(query).select()
+    # add a city filter here
+    query=db.Hotel_Info.name.contains(request.args[0]) 
+
+    hotels = db(query).select(db.Hotel_Info.ALL)
+
+    response.flash = len(hotels)
+
     if len(hotels) == 0:
         hotels = ['Sorry no hotels found of your interest...']
 
@@ -139,3 +163,19 @@ def userDetails():
     userInfo = db(query).select(db.auth_user.id, db.auth_user.first_name, db.auth_user.last_name, db.auth_user.photo)
 
     return dict(userReviews=userReviews, id=userInfo[0].id, fname=userInfo[0].first_name, lname=userInfo[0].last_name, photo=userInfo[0].photo)
+
+#@auth.requires_membership('moderator')
+def addHotel():
+
+    if not auth.has_membership('moderator'):
+        response.flash='Only moderators can add a new hotel information'
+        redirect(URL('index', vars=dict(flash='Only moderators can add a new hotel information')))
+
+    newHotelForm = SQLFORM(db.Hotel_Info)
+    if newHotelForm.process().accepted:
+        response.flash = 'form accepted'
+    elif newHotelForm.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill out the form'
+    return dict(newHotelForm=newHotelForm)    

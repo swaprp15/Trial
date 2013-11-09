@@ -70,11 +70,11 @@ use_janrain(auth, filename='private/janrain.key')
 
 db.define_table('Hotel_Info',
           Field('name', requires = IS_NOT_EMPTY()),
-          Field('address'),
-          Field('city'),
-          Field('costPerTwo', 'decimal(10,2)'),
+          Field('address', requires = IS_NOT_EMPTY()),
+          Field('city', requires = IS_NOT_EMPTY()),
+          Field('costPerTwo', 'decimal(10,2)', requires = IS_NOT_EMPTY()),
           Field('hours'),
-          Field('overall_rating', 'decimal(2,1)'),
+          Field('overall_rating', 'decimal(2,1)', requires = IS_NOT_EMPTY()),
           Field('no_of_reviewes', 'integer'))
 
 
