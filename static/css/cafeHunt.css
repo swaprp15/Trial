@@ -122,6 +122,7 @@ img.profilePic
 .user-snippet-details {
   padding-left: 70px;
   float: left;
+  vertical-align: top;
 }
 
 .user-snippet-name {

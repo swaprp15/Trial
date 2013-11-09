@@ -168,6 +168,7 @@ def search():
 
 @auth.requires_login()
 def details():
+
     #if adding a review
     # /addReview/hotel_id
 
@@ -247,3 +248,15 @@ def addHotel():
     else:
         response.flash = 'please fill out the form'
     return dict(newHotelForm=newHotelForm)    
+
+@auth.requires_membership('moderator')
+def deleteReview():
+    #/deleteReview/hotel_id/review_id
+    # delete review
+    if len(request.args) > 1 :
+        db(db.Review.id == request.args[1]).delete()
+        redirect(URL('details', args=[request.args[0]]))
+    elif len(request.args == 1):
+        redirect(URL('details', args=[request.args[0]]))
+    else:
+        request(URL('index'))
