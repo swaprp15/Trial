@@ -26,7 +26,7 @@ def index():
     ##    redirect(URL('search'))
 
     if form.accepts(request,session):
-        redirect(URL('search', args=[form.vars.keyword]))
+        redirect(URL('search', vars=dict(key=form.vars.keyword)))
 
 
     if request.args != []:
@@ -112,21 +112,45 @@ def data():
 
 def search():
 
+    # if normal flow
     if len(request.args) == 0:
-        redirect(URL('index'))
 
-    # add a city filter here
-    query=(db.Hotel_Info.name.contains(request.args[0]) & (db.Hotel_Info.city == session.city))
+        if len(request.vars) == 0:
+            redirect(URL('index'))
 
-    hotels = db(query).select(db.Hotel_Info.ALL)
+        # add a city filter here
+        query=(db.Hotel_Info.name.contains(request.vars['key']) & (db.Hotel_Info.city == session.city))
 
-    #response.flash = len(hotels)
+        hotels = db(query).select(db.Hotel_Info.ALL)
 
-    if len(hotels) == 0:
-        response.flash = 'Sorry no hotels found of your interest in city ' + session.city
-        #hotels = [str]
+        #response.flash = len(hotels)
 
-    return dict(content=hotels)
+        if len(hotels) == 0:
+            response.flash = 'Sorry no hotels found of your interest in city ' + session.city
+
+            redirect(URL('search', args=['noresult'], vars=dict(key=request.vars['key'])))
+
+            #hotels = [str]
+
+        return dict(content=hotels)
+    else:
+        # if earlier no results were found, do this is a new page... /search/noresult
+
+        newSearchForm=FORM(INPUT(_name='keyword', requiures=IS_NOT_EMPTY(), _placeholder='Please enter hotel name'), INPUT(_type='submit', _value='Search'))
+        #if form.process().accepted:
+        #    if form.accepts(request,session):
+        #       redirect(URL('search', args=[form.vars.keyword]))
+        ##    redirect(URL('search'))
+
+        if newSearchForm.accepts(request,session):
+            redirect(URL('search', vars=dict(key=newSearchForm.vars.keyword)))
+
+        hotels = []
+
+
+        return dict(content=hotels, newSearchForm=newSearchForm)
+        pass
+
 
 @auth.requires_login()
 def details():

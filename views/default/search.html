@@ -2,8 +2,24 @@
 {{extend 'layout.html'}}
 
 {{if 'content' in globals():}}
-<h3>Search result for : {{=request.args[0]}}</h3>
-<h4>{{=response.flash}}</h4>
+<h3>Search result for : {{=request.vars['key']}}</h3>
+
+
+{{if 'newSearchForm' in globals():}}
+
+<h4>Sorry no hotels found of your interest in city  {{=session.city}}</h4>
+
+<h4>Would you like try any other??</h4>
+
+<div id="searchGroup">
+	<!--<input type="text"></input>
+	<a href="{{=URL(f='search')}}">Search</button>-->
+	{{=newSearchForm}}
+
+</div>
+
+{{pass}}
+
 {{for hotel in content:}}
 <!--<p>{{=BEAUTIFY(hotel)}}</p>
 </br></br>
