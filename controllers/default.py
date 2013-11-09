@@ -130,9 +130,17 @@ def search():
 
             redirect(URL('search', args=['noresult'], vars=dict(key=request.vars['key'])))
 
-            #hotels = [str]
 
-        return dict(content=hotels)
+
+        # Add few recommondations
+
+        query = ((db.Hotel_Info.overall_rating >= 4.0) & (db.Hotel_Info.city == session.city))
+
+        recommondations = db(query).select(db.Hotel_Info.ALL)
+
+        recommondationMessage='Our recommondations for you:'
+
+        return dict(content=hotels, recommondations=recommondations, recommondationMessage=recommondationMessage)
     else:
         # if earlier no results were found, do this is a new page... /search/noresult
 
@@ -147,8 +155,14 @@ def search():
 
         hotels = []
 
+        query = ((db.Hotel_Info.overall_rating >= 4.0) & (db.Hotel_Info.city == session.city))
 
-        return dict(content=hotels, newSearchForm=newSearchForm)
+        recommondations = db(query).select(db.Hotel_Info.ALL)
+
+
+        recommondationMessage='Or you may try our recommondations:'
+
+        return dict(content=hotels, newSearchForm=newSearchForm, recommondations=recommondations, recommondationMessage=recommondationMessage)
         pass
 
 
