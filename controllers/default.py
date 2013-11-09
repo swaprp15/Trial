@@ -141,7 +141,23 @@ def details():
     #   redirect(URL('details', args=[session.hotel_id]))
     
     if addReviewForm.process().accepted:
+        # Add this review...
         db.Review.insert(user_id=auth.user_id, hotel_id=session.hotel_id, rating=addReviewForm.vars.rating, time_of_post=datetime.datetime.now(), description=addReviewForm.vars.description)
+
+        # Update the overall rating of this hotel.
+        row = db(db.Hotel_Info.id == session.hotel_id).select(db.Hotel_Info.overall_rating, db.Hotel_Info.no_of_reviewes)
+        currentRating = row[0].overall_rating
+        currentNoOfReviews = row[0].no_of_reviewes
+
+        import decimal
+
+        #getcontext().prec = 1
+
+        newNoOfReviews = currentNoOfReviews + 1
+        newRating = (currentRating + int(addReviewForm.vars.rating)/1.0)/newNoOfReviews
+
+        db(db.Hotel_Info.id == session.hotel_id).update(overall_rating=newRating, no_of_reviewes=newNoOfReviews)
+
         redirect(URL('details', args=[session.hotel_id]))
     elif addReviewForm.errors:
         redirect(URL('details', args=[session.hotel_id], vars=dict(flash='Please correct the errors')))

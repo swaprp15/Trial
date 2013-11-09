@@ -74,7 +74,7 @@ db.define_table('Hotel_Info',
           Field('city', requires = IS_NOT_EMPTY()),
           Field('costPerTwo', 'decimal(10,2)', requires = IS_NOT_EMPTY()),
           Field('hours'),
-          Field('overall_rating', 'decimal(2,1)', requires = IS_NOT_EMPTY()),
+          Field('overall_rating', 'float', requires = IS_NOT_EMPTY()),
           Field('no_of_reviewes', 'integer'))
 
 
