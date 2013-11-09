@@ -246,7 +246,7 @@ def addHotel():
     elif newHotelForm.errors:
         response.flash = 'Please correct the errors'
     else:
-        response.flash = 'please fill out the form'
+        response.flash = 'Please fill out the form'
     return dict(newHotelForm=newHotelForm)    
 
 @auth.requires_membership('moderator')
@@ -254,7 +254,24 @@ def deleteReview():
     #/deleteReview/hotel_id/review_id
     # delete review
     if len(request.args) > 1 :
+        reviewRating = db(db.Review.id == request.args[1]).select(db.Review.rating)
         db(db.Review.id == request.args[1]).delete()
+
+        # Update the overall rating of this hotel.
+        row = db(db.Hotel_Info.id == request.args[0]).select(db.Hotel_Info.overall_rating, db.Hotel_Info.no_of_reviewes)
+        currentRating = row[0].overall_rating
+        currentNoOfReviews = row[0].no_of_reviewes
+
+        import decimal
+
+        newNoOfReviews = currentNoOfReviews - 1
+        if newNoOfReviews == 0:
+            newRating = 0
+        else:
+            newRating = (currentRating - int(reviewRating)/1.0)/newNoOfReviews
+
+        db(db.Hotel_Info.id == session.hotel_id).update(overall_rating=newRating, no_of_reviewes=newNoOfReviews)
+
         redirect(URL('details', args=[request.args[0]]))
     elif len(request.args == 1):
         redirect(URL('details', args=[request.args[0]]))
@@ -266,10 +283,22 @@ def editReview():
     #/deleteReview/hotel_id/review_id
     if len(request.args) > 1 :
         crud.settings.update_next = URL('details', args=[request.args[0]])
-        editForm=crud.update(db.Review, request.args[1])
+        crud.messages.submit_button = 'Update'
+        editForm=crud.update(db.Review, request.args[1], fields=['rating', 'description'])
         #redirect(URL('details', args=[request.args[0]]))
         return dict(editForm=editForm)
     elif len(request.args == 1):
         redirect(URL('details', args=[request.args[0]]))
     else:
         request(URL('index'))
+
+@auth.requires_membership('moderator')
+def makeModerator():
+    
+    #makeModerator/user_id
+    if len(request.args) > 0 :
+        auth.add_membership('moderator', request.args[0])
+        redirect(URL('userDetails', args=[request.args[0]]))
+    else:
+        request(URL('index'))
+
