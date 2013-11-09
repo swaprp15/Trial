@@ -38,7 +38,7 @@ def _():
     app = request.application
     ctr = request.controller
 
-    response.menu += [(T('City'), False, URL('default', 'index'), [])]
+    #response.menu += [(T('City'), False, URL('default', 'index'), [])]
 
     # useful links to internal and external resources
     '''response.menu += [

@@ -28,8 +28,11 @@ def index():
     if form.accepts(request,session):
         redirect(URL('search', args=[form.vars.keyword]))
 
-    
 
+    if request.vars[0] == 'changeCity':
+        session.city = request.vars[1]
+        session.menu2 = [(T(session.city), False, URL('default', 'index'), [(T('Hyderabad'), False, URL('default', 'index', args=['changeCity', 'Hyderabad'])),(T('Pune'), False, URL('default', 'index'))])]
+    
     return dict(message=T('Welcome to CafeHunt!!'), form=form)
 
 

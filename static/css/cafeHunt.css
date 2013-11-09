@@ -104,3 +104,7 @@ img.profilePic
   width: 228px;
 }
 
+body
+  {
+    background-image:url('/static/images/bimage.jpg');
+  }

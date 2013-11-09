@@ -2,6 +2,14 @@
 {{extend 'layout.html'}}
 
 {{if 'message' in globals():}}
+
+<style type="text/css">
+	body
+	{
+		background-image:url('bimage.jpg');
+	}
+</style>
+
 <h3>{{=message}}</h3>
 <div id="categoryDiv">
 	<div class="restroType"></div>
