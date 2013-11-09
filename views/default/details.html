@@ -79,7 +79,8 @@
                 {{if auth.has_membership('moderator'):}}
 				<a href={{=URL('deleteReview', args=[review.Review.hotel_id, review.Review.id])}}>Delete</a>
 				<br/>
-				
+				<a href={{=URL('editReview', args=[review.Review.hotel_id, review.Review.id])}}>Edit</a>
+				</br>
 				{{pass}}
 		                                                                </div>
                     </div>

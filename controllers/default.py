@@ -260,3 +260,16 @@ def deleteReview():
         redirect(URL('details', args=[request.args[0]]))
     else:
         request(URL('index'))
+
+@auth.requires_membership('moderator')
+def editReview():
+    #/deleteReview/hotel_id/review_id
+    if len(request.args) > 1 :
+        crud.settings.update_next = URL('details', args=[request.args[0]])
+        editForm=crud.update(db.Review, request.args[1])
+        #redirect(URL('details', args=[request.args[0]]))
+        return dict(editForm=editForm)
+    elif len(request.args == 1):
+        redirect(URL('details', args=[request.args[0]]))
+    else:
+        request(URL('index'))
