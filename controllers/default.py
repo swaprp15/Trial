@@ -128,16 +128,23 @@ def details():
 
     session.hotel_id = request.args[0]
 
-    addReviewForm=FORM(INPUT(_name='description', requiures=IS_NOT_EMPTY(), _placeholder='What\'s your opinion?'), INPUT(_type='submit', _value='Post it..'), INPUT(_type='reset', _value='reset'))
+    #addReviewForm=FORM(INPUT(_name='description', requiures=IS_NOT_EMPTY(), _placeholder='What\'s your opinion?'), INPUT(_type='submit', _value='Post it..'), INPUT(_type='reset', _value='reset'))
+
+    addReviewForm=SQLFORM(db.Review, fields=['rating', 'description'], submit_button='Post')
 
     import datetime
 
-    if addReviewForm.accepts(request,session):
-        # /addReview/hotel_id
-        db.Review.insert(user_id=auth.user_id, hotel_id=session.hotel_id, rating=2.5, time_of_post=datetime.datetime.now(), description=addReviewForm.vars.description)
-
-        redirect(URL('details', args=[session.hotel_id]))
+    #if addReviewForm.accepts(request,session):
+    #    # /addReview/hotel_id
+    #    db.Review.insert(user_id=auth.user_id, hotel_id=session.hotel_id, rating=addReviewForm.vars.rating, time_of_post=datetime.datetime.now(), description=addReviewForm.vars.description)
+    #
+    #   redirect(URL('details', args=[session.hotel_id]))
     
+    if addReviewForm.process().accepted:
+        db.Review.insert(user_id=auth.user_id, hotel_id=session.hotel_id, rating=addReviewForm.vars.rating, time_of_post=datetime.datetime.now(), description=addReviewForm.vars.description)
+        redirect(URL('details', args=[session.hotel_id]))
+    elif addReviewForm.errors:
+        redirect(URL('details', args=[session.hotel_id], vars=dict(flash='Please correct the errors')))
 
     query=db.Hotel_Info.id == request.args[0]
     hotels = db(query).select()
@@ -173,9 +180,9 @@ def addHotel():
 
     newHotelForm = SQLFORM(db.Hotel_Info)
     if newHotelForm.process().accepted:
-        response.flash = 'form accepted'
+        response.flash = 'New hotel added'
     elif newHotelForm.errors:
-        response.flash = 'form has errors'
+        response.flash = 'Please correct the errors'
     else:
         response.flash = 'please fill out the form'
     return dict(newHotelForm=newHotelForm)    

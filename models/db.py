@@ -81,9 +81,9 @@ db.define_table('Hotel_Info',
 db.define_table('Review',
           Field('user_id', 'reference auth_user', requires=IS_NOT_EMPTY()),
           Field('hotel_id', 'reference Hotel_Info', requires=IS_NOT_EMPTY()),
-          Field('rating', 'decimal(2,1)', requires=IS_NOT_EMPTY()),
+          Field('rating', requires=IS_IN_SET([1,2,3,4,5])),
           Field('time_of_post', 'datetime', requires=IS_NOT_EMPTY()),
-          Field('description', requires=IS_NOT_EMPTY()))
+          Field('description', 'text', requires=IS_NOT_EMPTY()))
 
 
 '''db.define_table('User_Info',
