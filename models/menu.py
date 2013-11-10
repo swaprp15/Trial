@@ -47,6 +47,9 @@ def _():
     #if(session.city != 'Pune' and session.city != 'Hyderabad'):
     #session.city = 'Hyderabad'
 
+    if session.city == None:
+        session.city = 'Hyderabad'
+
     response.menu += [
         (SPAN(session.city, _class='highlighted'), False, URL('index'), [
         (T('Hyderabad'), False, URL('index', args=['changeCity', 'Hyderabad'])),

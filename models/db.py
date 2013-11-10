@@ -91,6 +91,12 @@ db.define_table('Review',
           Field('no_of_reviews', 'integer'))
 '''
 
+from gluon.tools import Mail
+mail = Mail()
+mail.settings.server = 'smtp.gmail.com:587'
+mail.settings.sender = 'swap.andro24@gmail.com'
+mail.settings.login = 'swap.andro24:srpatil123'
+
 #########################################################################
 ## Define your tables below (or better in another model file) for example
 ##

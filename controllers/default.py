@@ -218,6 +218,13 @@ def details():
     if len(reviews) == 0:
         reviews = []
 
+    session.hotel_name = hotels[0].name
+    session.hotel_address = hotels[0].address
+    session.rating = hotels[0].overall_rating
+    session.hotel_cost = hotels[0].costPerTwo
+    session.hotel_hours = hotels[0].hours
+    session.url = request.url
+
     return dict(details=hotels[0], reviews=reviews, addReviewForm=addReviewForm)
 
 def userDetails():
@@ -302,3 +309,21 @@ def makeModerator():
     else:
         request(URL('index'))
 
+def sendMail():
+    mailForm = FORM('Send this info via e-mail:',
+                    INPUT(_name='To', requiures=IS_EMAIL()),
+                    INPUT(_name='Subject', requiures=IS_NOT_EMPTY()),
+                    INPUT(_name='Body', requiures=IS_NOT_EMPTY()),
+                    INPUT(_type='submit'),
+                    submit_button='Send')
+
+    mailForm.vars.Subject = 'Hotel information - ' + session.hotel_name
+    mailForm.vars.Body = session.hotel_name + '\n' + session.hotel_address + '\n' + str(session.rating) + '\n' + str(session.hotel_cost) + '\n' + session.hotel_hours + '\n' + 'http://127.0.0.1:8000' + session.url 
+
+
+    if mailForm.accepts(request,session):
+        mail.send(to=[mailForm.vars.To], subject=mailForm.vars.Subject, reply_to='swap.andro24@gmail.com', message=mailForm.vars.Body)
+        redirect(URL('details', args=[session.hotel_id]))
+    
+
+    return dict(mailForm=mailForm)
