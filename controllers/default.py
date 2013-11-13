@@ -18,6 +18,8 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
+
+    response.flash=''
     
     form=FORM(INPUT(_name='keyword', requiures=IS_NOT_EMPTY(), _placeholder='Please enter hotel name'), INPUT(_type='submit', _value='Search'))
     #if form.process().accepted:
@@ -40,19 +42,29 @@ def index():
     response.menu = [
     (T('Home'), False, URL('default', 'index'), [])]
 
-    response.menu += [
-        (SPAN(session.city, _class='highlighted'), False, URL('index'), [
+    query = db.Hotel_Info.id > 0
+
+    cities = db(query).select(db.Hotel_Info.city, distinct=True)
+
+    menuList = []
+
+    for city in cities:
+        t = (T(city.city), False, URL('index', args=['changeCity', city.city]))
+        menuList.append(t)
+
+    L = [
         (T('Hyderabad'), False, URL('index', args=['changeCity', 'Hyderabad'])),
         (T('Pune'), False, URL('index', args=['changeCity', 'Pune'])),
-        (T('Mumbai'), False, URL('index', args=['changeCity', 'Mumbai']))])]
+        (T('Mumbai'), False, URL('index', args=['changeCity', 'Mumbai']))]
+
+    response.menu += [
+        (SPAN(session.city, _class='highlighted'), False, URL('index'), menuList)]
 
     response.menu += [(SPAN('Add', _class='highlighted'), False, URL('index'), [
         (T('Hotel'), False, URL('addHotel'))])]
 
     if len(request.vars) != 0:
         response.flash=request.vars['flash']
-    else:
-        response.flash = session.city
         
     return dict(message=T('Welcome to CafeHunt!!'), form=form)
 
