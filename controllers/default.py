@@ -218,6 +218,13 @@ def details():
     if len(reviews) == 0:
         reviews = []
 
+
+    # Get photos if any
+
+    query = db.Hotel_Photos.hotel_id == session.hotel_id
+
+    images = db(query).select(db.Hotel_Photos.photo)
+
     session.hotel_name = hotels[0].name
     session.hotel_address = hotels[0].address
     session.rating = hotels[0].overall_rating
@@ -225,7 +232,7 @@ def details():
     session.hotel_hours = hotels[0].hours
     session.url = request.url
 
-    return dict(details=hotels[0], reviews=reviews, addReviewForm=addReviewForm)
+    return dict(details=hotels[0], reviews=reviews, addReviewForm=addReviewForm, images=images)
 
 def userDetails():
     userId = request.args[0]
@@ -331,3 +338,23 @@ def sendMail():
     
 
     return dict(mailForm=mailForm)
+
+def addHotelPhoto():
+
+    if len(request) <= 0:
+        redirect('index')
+
+    hotelId = request.args[0];
+
+    photoForm = SQLFORM(db.Hotel_Photos, fields=['photo'], submit_button='Upload')
+    photoForm.vars.hotel_id = request.args[0]
+    if photoForm.process().accepted:
+        response.flash = 'New photo added'
+
+        #db.Hotel_Photos.insert(hotel_id=hotelId, photo=photoForm.vars.photo)
+
+    elif photoForm.errors:
+        response.flash = 'Please correct the errors'
+    else:
+        response.flash = 'Please fill out the form'
+    return dict(photoForm=photoForm)

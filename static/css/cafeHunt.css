@@ -220,3 +220,17 @@ body
 {
   padding-left: 100px;
 }
+
+div.imageDiv
+{
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-left: 10px;
+}
+
+div.hotelImage
+{
+  width: 200px;
+  height: 200px;  
+}

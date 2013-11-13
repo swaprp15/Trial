@@ -36,6 +36,10 @@
         <span data-icon="r" class="right search-result-review-icon"></span>
     </br>
     <a href={{=URL('sendMail')}}>Send via email</a>
+    </br>
+    {{if auth.has_membership('moderator'):}}
+        <a href={{=URL('addHotelPhoto', args=[details.id])}}>Add a photo</a>
+    {{pass}}
      </div>
      <div class="clear"></div>
 </div>
@@ -45,7 +49,8 @@
 
 <div class="clear"></div>
 
-<p id="ReviewsBlock" style="font-weight:bold">Reviews</p>
+<span id="ReviewsBlock" style="font-weight:bold">Reviews</span> &nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#photos">Photos</a></span>
+</br>
 <a href="#writeReview">Write a review</a>
 <br/>
 <br/>
@@ -98,9 +103,20 @@
 <div class="clear"></div>
 
 <div id="writeReviewBlock">
-<p id="writeReview">Write a review</p>
+<p id="writeReview"><b>Write a review</b></p>
 {{=addReviewForm}}
 </div>
+
+<div id="photos">
+    <p><b>Photos</b></p>
+    {{for image in images:}}
+        <div class="imageDiv"><img class="hotelImage" src={{=URL('download', args=image.photo)}}></img></div>
+    {{pass}}
+</div>
+
+<div class="clear"></div>
+
+<p><b><a href="#ReviewsBlock">Reviews</a></b></p>
 {{block right_sidebar}}
 {{=A(T("Adds will go here"), _href=URL('admin','default','index'), _class='btn',
      _style='margin-top: 1em;')}}
