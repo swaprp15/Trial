@@ -6,7 +6,18 @@ div.restroType
 	border: 1px solid black;
 	float: left;
 }
+#main
+{
+	color:white;
+	background-image: url("../images/IndexBackgroundImage.jpg");
 
+	background-position:center;
+
+  width: 70%;
+  height: 70%;
+	
+
+}
 #categoryDiv
 {
 	height: 150px;
@@ -247,4 +258,13 @@ div.menuImage
 {
   width: 200px;
   height: 200px;  
+}
+
+#ad1,#ad2,#ad3,#ad4{
+    	width: 100px;
+	height: 100px;
+	background-color: grey;
+	border: 1px solid black;
+	clear:left;
+	float: left;
 }

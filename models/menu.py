@@ -7,7 +7,7 @@
 
 response.logo = A(B('CafeHunt'),XML('&trade;&nbsp;'),
                   _class="brand",_href=URL('index'))
-response.title = request.application.replace('_',' ').title()
+response.title = 'CafeHunt'
 response.subtitle = ''
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html

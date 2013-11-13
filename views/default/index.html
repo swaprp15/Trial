@@ -10,6 +10,7 @@
 	}
 </style>
 
+<div id="main">
 <h3>{{=message}}</h3>
 <div id="categoryDiv">
 	<div class="restroType"></div>
@@ -24,13 +25,9 @@
 	{{=form}}
 
 </div>
+</div>
 {{elif 'content' in globals():}}
 {{=content}}
 {{else:}}
 {{=BEAUTIFY(response._vars)}}
 {{pass}}
-
-{{block right_sidebar}}
-{{=A(T("Adds will go here"), _href='#', _class='btn',
-     _style='margin-top: 1em;')}}
-{{end}}

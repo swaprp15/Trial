@@ -98,7 +98,6 @@
         <div class="span12">
             <div class="page-header">
                 <h1>
-                    {{=response.title}}
                     <small>{{=response.subtitle or ''}}</small>
                 </h1>
             </div>
@@ -106,7 +105,7 @@
 	{{pass}}
     </header>
 
-    <section id="main" class="main row">
+    <section  class="main row">
         {{if left_sidebar_enabled:}}
         <div class="span3 left-sidebar">
             {{block left_sidebar}}
@@ -122,13 +121,25 @@
             {{end}}
         </div>
 
-        {{if right_sidebar_enabled:}}
+        {{block right_sidebar}}
+        
+        {{session.lastUrl=request.url}}
         <div class="span3">
-            {{block right_sidebar}}
-            <h3>Right Sidebar</h3>
-            <p></p>
-            {{end}}
+    <div id="ad1">
+          <p><a href={{=URL('incrClicks', args=[session.hotelIds[0]])}} ><img src={{=URL('download', args=session.hotelPhotos[0].banner)}}></img></a></p><br/>    
+              </div>
+            <div id="ad2">
+              <p><a href={{=URL('incrClicks', args=[session.hotelIds[1]])}} ><img src={{=URL('download', args=session.hotelPhotos[1].banner)}}></img></a></p><br/>
+            </div>
+            <div id="ad3">
+              <p><a href={{=URL('incrClicks', args=[session.hotelIds[2]])}} ><img src={{=URL('download', args=session.hotelPhotos[2].banner)}}></img></a></p><br/>
+            </div>
+            <div id="ad4">
+               <p><a href={{=URL('incrClicks', args=[session.hotelIds[3]])}} ><img src={{=URL('download', args=session.hotelPhotos[3].banner)}}></img></a></p><br/>
+            </div>
+            
         </div>
+        {{end}}
         {{pass}}
     </section><!--/main-->
 

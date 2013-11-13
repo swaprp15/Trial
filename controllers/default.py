@@ -18,9 +18,29 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
+    
+    session.hotelPhotos = []
+    session.hotelIds = []
+    query = db.Advertisement.hotel_id == 1
+    session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
+    session.hotelIds.append(1)
 
     response.flash=''
+
+    query = db.Advertisement.hotel_id == 2
+    session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
+    session.hotelIds.append(2)
     
+    query = db.Advertisement.hotel_id == 3
+    session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
+    session.hotelIds.append(3)
+    
+    query = db.Advertisement.hotel_id == 4
+    session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
+    session.hotelIds.append(4)
+    
+
+    response.flash = T("Welcome CafeHunt!")
     form=FORM(INPUT(_name='keyword', requiures=IS_NOT_EMPTY(), _placeholder='Please enter hotel name'), INPUT(_type='submit', _value='Search'))
     #if form.process().accepted:
     #    if form.accepts(request,session):
@@ -394,3 +414,14 @@ def addHotelMenu():
     else:
         response.flash = 'Please fill out the form'
     return dict(menuForm=menuForm)
+
+def incrClicks():
+    hotelId = request.args[0]
+    
+    # db query to increment click of this hotel id
+    query = db.Advertisement.hotel_id == hotelId
+    clicksRow= db(query).select(db.Advertisement.clicks)[0]
+    nclicks= int(clicksRow.clicks) + 1
+    db(db.Advertisement.hotel_id==hotelId).update(clicks=nclicks)
+    # redirect to original page
+    redirect(URL('details', args=[request.args[0]]))
