@@ -6,16 +6,18 @@ div.restroType
 	border: 1px solid black;
 	float: left;
 }
-#main
+#indexMain
 {
 	color:white;
 	background-image: url("../images/IndexBackgroundImage.jpg");
 
 	background-position:center;
 
-  width: 70%;
-  height: 70%;
-	
+  width: 100%;
+  height: 100%;
+
+  padding-left: 30px;
+  padding-top: 15%;
 
 }
 #categoryDiv
@@ -267,4 +269,23 @@ div.menuImage
 	border: 1px solid black;
 	clear:left;
 	float: left;
+}
+
+div.container
+{
+  height: 100%;
+}
+
+div.layoutIncludeBlock
+{
+  width: 70%;
+  height: 480px;
+  /*margin: auto;*/
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.span9
+{
+  height: 480px;
 }

@@ -69,7 +69,7 @@
 <body>
   <!-- Navbar ================================================== -->
   <div class="navbar navbar-inverse">
-    <div class="flash">{{=response.flash or ''}}</div>
+    <!--<div class="flash">{{=response.flash or ''}}</div>-->
     <div class="navbar-inner">
       <div class="container">
         {{is_mobile=request.user_agent().is_mobile}}
@@ -91,20 +91,23 @@
     </div>
   </div><!--/top navbar -->
 
+
   <div class="container">
-    <!-- Masthead ================================================== -->
+    
+    <!--
+    <div class="container">
     <header class="mastheader row" id="header">
       {{if response.title:}}
         <div class="span12">
             <div class="page-header">
-                <h1>
-                    <small>{{=response.subtitle or ''}}</small>
-                </h1>
+                <h2>
+                  {{response.title}}
+                </h2>
             </div>
         </div>
 	{{pass}}
     </header>
-
+  -->
     <section  class="main row">
         {{if left_sidebar_enabled:}}
         <div class="span3 left-sidebar">
@@ -115,7 +118,8 @@
         </div>
         {{pass}}
 
-        <div class="{{=middle_columns}}">
+        <!--<div class="layoutIncludeBlock">-->
+        <div class="span9">
             {{block center}}
             {{include}}
             {{end}}
@@ -124,10 +128,11 @@
         {{block right_sidebar}}
         
         {{session.lastUrl=request.url}}
+
         <div class="span3">
-    <div id="ad1">
-          <p><a href={{=URL('incrClicks', args=[session.hotelIds[0]])}} ><img src={{=URL('download', args=session.hotelPhotos[0].banner)}}></img></a></p><br/>    
-              </div>
+            <div id="ad1">
+                <p><a href={{=URL('incrClicks', args=[session.hotelIds[0]])}} ><img src={{=URL('download', args=session.hotelPhotos[0].banner)}}></img></a></p><br/>    
+            </div>
             <div id="ad2">
               <p><a href={{=URL('incrClicks', args=[session.hotelIds[1]])}} ><img src={{=URL('download', args=session.hotelPhotos[1].banner)}}></img></a></p><br/>
             </div>
@@ -158,7 +163,7 @@
         </footer>
     </div>
 
-  </div> <!-- /container -->
+  </div> --><!-- /container -->
 
   <!-- The javascript =============================================
        (Placed at the end of the document so the pages load faster) -->

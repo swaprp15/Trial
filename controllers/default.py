@@ -18,6 +18,8 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
+
+    response.title = 'Welcome to CafeHunt!'
     
     session.hotelPhotos = []
     session.hotelIds = []
