@@ -304,7 +304,8 @@ def makeModerator():
     
     #makeModerator/user_id
     if len(request.args) > 0 :
-        auth.add_membership('moderator', request.args[0])
+        response.flash = request.args[0]
+        auth.add_membership('moderator', int(request.args[0]))
         redirect(URL('userDetails', args=[request.args[0]]))
     else:
         request(URL('index'))
@@ -320,9 +321,12 @@ def sendMail():
     mailForm.vars.Subject = 'Hotel information - ' + session.hotel_name
     mailForm.vars.Body = session.hotel_name + '\n' + session.hotel_address + '\n' + str(session.rating) + '\n' + str(session.hotel_cost) + '\n' + session.hotel_hours + '\n' + 'http://127.0.0.1:8000' + session.url 
 
+    htmlbody = '<html><p><b>Name: ' + session.hotel_name + '</b>\r\n</br></p><p><b>Address:</b> '+session.hotel_address + '</br></p><p><b>Rating: </b>' + str(session.rating) + '</br></p><p><b>Cost per 2 :</b> ' + str(session.hotel_cost) + '</br></p><p><b>Timings: </b> ' + session.hotel_hours + '</br></p><p>For details please visit ' + 'http://127.0.0.1:8000' + session.url + '</p></html>'
+
 
     if mailForm.accepts(request,session):
-        mail.send(to=[mailForm.vars.To], subject=mailForm.vars.Subject, reply_to='swap.andro24@gmail.com', message=mailForm.vars.Body)
+        #mail.send(to=[mailForm.vars.To], subject=mailForm.vars.Subject, reply_to='swap.andro24@gmail.com', message=mailForm.vars.Body)
+        mail.send(to=[mailForm.vars.To], subject=mailForm.vars.Subject, reply_to='contactus@cafehunt.com', message=htmlbody)
         redirect(URL('details', args=[session.hotel_id]))
     
 

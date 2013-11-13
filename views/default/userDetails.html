@@ -11,7 +11,7 @@
 		</br>
 		<!-- If logged in user is moderator, show an option to make this user as moderator -->
 		{{if auth.has_membership('moderator'):}}
-			<a href={{URL('makeModerator', args=[request.args[0]])}}>Make moderator</a>
+			<a href={{=URL('makeModerator', args=[request.args[0]])}}>Make moderator</a>
 		{{pass}}
 	{{pass}}
 	<p>{{=len(userReviews)}} Reviews</p>
