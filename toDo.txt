@@ -1,0 +1,10 @@
+
+Adjust details page
+
+Adjust div of each page.. so that add gets displayed correctly
+
+increase the size of the ads banner
+
+add link to the review button in search page
+
+add proper title to each page
