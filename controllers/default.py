@@ -225,6 +225,10 @@ def details():
 
     images = db(query).select(db.Hotel_Photos.photo)
 
+    query = db.Hotel_MenuCard.hotel_id == session.hotel_id
+
+    menus = db(query).select(db.Hotel_MenuCard.menu)
+
     session.hotel_name = hotels[0].name
     session.hotel_address = hotels[0].address
     session.rating = hotels[0].overall_rating
@@ -232,7 +236,7 @@ def details():
     session.hotel_hours = hotels[0].hours
     session.url = request.url
 
-    return dict(details=hotels[0], reviews=reviews, addReviewForm=addReviewForm, images=images)
+    return dict(details=hotels[0], reviews=reviews, addReviewForm=addReviewForm, images=images, menus=menus)
 
 def userDetails():
     userId = request.args[0]
@@ -358,3 +362,23 @@ def addHotelPhoto():
     else:
         response.flash = 'Please fill out the form'
     return dict(photoForm=photoForm)
+
+
+def addHotelMenu():
+    if len(request) <= 0:
+        redirect('index')
+
+    hotelId = request.args[0];
+
+    menuForm = SQLFORM(db.Hotel_MenuCard, fields=['menu'], submit_button='Upload')
+    menuForm.vars.hotel_id = request.args[0]
+    if menuForm.process().accepted:
+        response.flash = 'New photo added'
+
+        #db.Hotel_Photos.insert(hotel_id=hotelId, photo=photoForm.vars.photo)
+
+    elif menuForm.errors:
+        response.flash = 'Please correct the errors'
+    else:
+        response.flash = 'Please fill out the form'
+    return dict(menuForm=menuForm)

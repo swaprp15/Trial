@@ -234,3 +234,17 @@ div.hotelImage
   width: 200px;
   height: 200px;  
 }
+
+div.menuDiv
+{
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-left: 10px;
+}
+
+div.menuImage
+{
+  width: 200px;
+  height: 200px;  
+}

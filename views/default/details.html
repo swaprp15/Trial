@@ -39,6 +39,8 @@
     </br>
     {{if auth.has_membership('moderator'):}}
         <a href={{=URL('addHotelPhoto', args=[details.id])}}>Add a photo</a>
+        </br>
+        <a href={{=URL('addHotelMenu', args=[details.id])}}>Add a menu card</a>
     {{pass}}
      </div>
      <div class="clear"></div>
@@ -49,7 +51,7 @@
 
 <div class="clear"></div>
 
-<span id="ReviewsBlock" style="font-weight:bold">Reviews</span> &nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#photos">Photos</a></span>
+<span id="ReviewsBlock" style="font-weight:bold">Reviews</span> &nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#photos">Photos</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#menuCard">Menu card</a></span>
 </br>
 <a href="#writeReview">Write a review</a>
 <br/>
@@ -114,8 +116,15 @@
     {{pass}}
 </div>
 
-<div class="clear"></div>
+</br>
 
+<div id="menuCard" class="clear">
+    <p><b>Menu card</b></p>
+    {{for menu in menus:}}
+        <div class="menuDiv"><img class="menuImage" src={{=URL('download', args=menu.menu)}}></img></div>
+    {{pass}}
+</div>
+<div class="clear"></div>
 <p><b><a href="#ReviewsBlock">Reviews</a></b></p>
 {{block right_sidebar}}
 {{=A(T("Adds will go here"), _href=URL('admin','default','index'), _class='btn',

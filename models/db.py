@@ -90,6 +90,11 @@ db.define_table('Hotel_Photos',
           Field('hotel_id', 'integer', requires=IS_NOT_EMPTY()),
           Field('photo', 'upload', requires=IS_NOT_EMPTY()))
 
+db.define_table('Hotel_MenuCard',
+          Field('hotel_id', 'integer', requires=IS_NOT_EMPTY()),
+          Field('menu', 'upload', requires=IS_NOT_EMPTY()))
+
+
 '''db.define_table('User_Info',
           Field('user_id', 'reference auth_user'),
           Field('no_of_reviews', 'integer'))
