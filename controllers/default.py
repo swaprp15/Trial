@@ -372,6 +372,8 @@ def userDetails():
 #@auth.requires_membership('moderator')
 def addHotel():
 
+    response.flash = ''
+
     if not auth.has_membership('moderator'):
         response.flash='Only moderators can add a new hotel information'
         session.showFlash=True

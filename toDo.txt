@@ -1,4 +1,10 @@
 
+Advanced search verification
+
+Take advertisements from Zomato..
+
+Photo on the first page
+
 Modify Hotel_Info to take photo from Hotel_Info -- Check with Ganga
 
 change color of rating according to value
