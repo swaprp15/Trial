@@ -318,7 +318,7 @@ def details():
         #getcontext().prec = 1
 
         newNoOfReviews = currentNoOfReviews + 1
-        newRating = (currentRating + int(addReviewForm.vars.rating)/1.0)/newNoOfReviews
+        newRating = (currentRating*currentNoOfReviews + int(addReviewForm.vars.rating)/1.0)/newNoOfReviews
 
         db(db.Hotel_Info.id == session.hotel_id).update(overall_rating=newRating, no_of_reviewes=newNoOfReviews)
 
@@ -388,12 +388,30 @@ def addHotel():
         response.flash = 'Please fill out the form'
     return dict(newHotelForm=newHotelForm)    
 
-@auth.requires_membership('moderator')
+#@auth.requires_membership('moderator')
 def deleteReview():
+
     #/deleteReview/hotel_id/review_id
     # delete review
     if len(request.args) > 1 :
-        reviewRating = db(db.Review.id == request.args[1]).select(db.Review.rating)
+        reviewRating = db(db.Review.id == request.args[1]).select(db.Review.rating, db.Review.user_id)
+
+        #No record found
+        if len(reviewRating) <= 0:
+            if len(request.args) == 2:
+                redirect(URL('details', args=[request.args[0]]))
+            else:
+                redirect(URL('index'))
+
+
+        # Before deleting check if the id is same as currently loggen in user or is moderator
+        
+        if ((auth.user_id != reviewRating[0].user_id) and (not auth.has_membership('moderator'))):
+            if len(request.args) == 2:
+                redirect(URL('details', args=[request.args[0]]))
+            else:
+                redirect(URL('index'))
+
         db(db.Review.id == request.args[1]).delete()
 
         # Update the overall rating of this hotel.
@@ -415,24 +433,44 @@ def deleteReview():
         db(db.Hotel_Info.id == session.hotel_id).update(overall_rating=newRating, no_of_reviewes=newNoOfReviews)
 
         redirect(URL('details', args=[request.args[0]]))
-    elif len(request.args == 1):
+    elif len(request.args) == 1:
         redirect(URL('details', args=[request.args[0]]))
     else:
-        request(URL('index'))
+        redirect(URL('index'))
 
-@auth.requires_membership('moderator')
+#@auth.requires_membership('moderator')
 def editReview():
     #/deleteReview/hotel_id/review_id
     if len(request.args) > 1 :
         crud.settings.update_next = URL('details', args=[request.args[0]])
         crud.messages.submit_button = 'Update'
+
+
+        # First get the user id of this review...
+        review = db(db.Review.id == request.args[1]).select(db.Review.user_id)
+
+        # Check if record does exists.
+        if len(review) <= 0:
+            if len(request.args) == 2:
+                redirect(URL('details', args=[request.args[0]]))
+            else:
+                redirect(URL('index'))
+
+        # Before updating check if the id is same as currently loggen in user or is moderator
+        if ((auth.user_id != review[0].user_id) and (not auth.has_membership('moderator'))):
+            if len(request.args) == 2:
+                redirect(URL('details', args=[request.args[0]]))
+            else:
+                redirect(URL('index'))
+
+
         editForm=crud.update(db.Review, request.args[1], fields=['rating', 'description'])
         #redirect(URL('details', args=[request.args[0]]))
         return dict(editForm=editForm)
-    elif len(request.args == 1):
+    elif len(request.args) == 1:
         redirect(URL('details', args=[request.args[0]]))
     else:
-        request(URL('index'))
+        redirect(URL('index'))
 
 @auth.requires_membership('moderator')
 def makeModerator():
@@ -443,7 +481,7 @@ def makeModerator():
         auth.add_membership('moderator', int(request.args[0]))
         redirect(URL('userDetails', args=[request.args[0]]))
     else:
-        request(URL('index'))
+        redirect(URL('index'))
 
 def sendMail():
     mailForm = FORM(TABLE(

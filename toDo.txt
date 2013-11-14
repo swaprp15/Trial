@@ -1,4 +1,6 @@
 
+Review delete logic not working properly..
+
 Take advertisements from Zomato..
 
 Photo on the first page
@@ -14,3 +16,5 @@ logo - color
 Add proper type of food
 
 User should not be allowed to add more than one review.. But can edit his own...
+
+Add footer...
