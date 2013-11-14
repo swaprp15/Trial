@@ -519,10 +519,25 @@ def incrClicks():
     redirect(URL('details', args=[request.args[0]]))
 
 def advancedSearch():
-
     session.advancedSearch={}
 
     if request.vars.submit == 'submit':
+
+        keywords = request.vars
+        keys = request.vars.keys()
+
+        if ('cost' not in keys) or  ('rating' not in keys) or (keywords['costValue'] == '') or (keywords['ratingValue'] == '') :
+            message = 'At least provide preferences for cost and rating'
+            redirect(URL('advancedSearch', vars={'flash':'At least provide preferences for cost and rating'}))
+
+        try:
+            val = int(keywords['costValue'])
+            val = int(keywords['ratingValue'])
+        except ValueError:
+            redirect(URL('advancedSearch', vars={'flash':'Please provide numeric value for cost and rating'}))
+
+        if int(keywords['costValue']) < 0 or int(keywords['ratingValue']) < 0:
+            redirect(URL('advancedSearch', vars={'flash':'Please provide non-negative for cost and rating'}))
 
         for key in request.vars.keys():
             session.advancedSearch[key]=request.vars[key]

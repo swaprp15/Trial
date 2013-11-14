@@ -1,6 +1,4 @@
 
-Advanced search verification
-
 Take advertisements from Zomato..
 
 Photo on the first page

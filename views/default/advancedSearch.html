@@ -2,7 +2,9 @@
 {{extend 'layout.html'}}
 
 <div id="addMenuDiv">
-
+{{if len(request.vars) > 0 and 'flash' in request.vars.keys():}}	
+<div class="flash">{{=request.vars['flash']}}</div>
+{{pass}}
 <h3>Advanced search : </h3>
 
 <form action={{=URL('advancedSearch')}} method="post">
