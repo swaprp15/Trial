@@ -6,7 +6,7 @@
 #########################################################################
 
 response.logo = A(B('CafeHunt'),XML('&trade;&nbsp;'),
-                  _class="brand",_href=URL('index'))
+                  _class="cafeLogo",_href=URL('index'))
 response.title = 'CafeHunt'
 response.subtitle = ''
 

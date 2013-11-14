@@ -346,3 +346,18 @@ a:hover
   text-decoration: none;
   webkit-transform: scale(2,2)
 }
+
+.cafeLogo
+{
+  background-color: red; color:red; display:block;float:left;padding:10px 20px 10px;margin-left:-20px;font-size:20px;font-weight:200;color:#777;text-shadow:0 1px 0 #fff
+}
+
+.cafeLogo:hover
+{
+  text-decoration:none;
+}
+
+.ratingValueBlock
+{
+  background-color:green; width:40px; height:30px; text-align:center; color:white
+}
