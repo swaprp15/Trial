@@ -3,6 +3,10 @@
 
 {{if 'message' in globals():}}
 
+{{if len(request.vars) != 0:}}
+<div class="flash">{{=request.vars['flash'] or ''}}</div>
+{{session.showFlash=False}}
+{{pass}}
 <div id="indexMain">
 <h3>{{=message}}</h3>
 <div id="categoryDiv">

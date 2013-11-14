@@ -96,7 +96,7 @@ img.profilePic
 
 .details-name > a:hover, .user-snippet-name > a:hover
 {
-  color: red;
+  color: #700000;
   text-decoration: none;
 }
 
@@ -192,6 +192,8 @@ img.profilePic
 .review
 {
   margin-bottom: 20px;
+  border-bottom:1px solid #D0D0D0;
+  padding-bottom: 20px;
 }
 
 .res-review-top-right {
@@ -301,6 +303,12 @@ div.menuImage
   width: 200px;
   height: 200px;  
 }
+#adRight{
+	position:absolute;
+	top:30%;
+	right:10%;
+
+}
 
 #ad1,#ad2,#ad3,#ad4{
     	width: 100px;
@@ -363,7 +371,7 @@ a.hover
 
 .cafeLogo
 {
-  background-color: red; color:red; display:block;float:left;padding:10px 20px 10px;margin-left:-20px;font-size:20px;font-weight:200;color:#777;text-shadow:0 1px 0 #fff
+  background-color: #E00000; color:red; display:block;float:left;padding:10px 20px 10px;margin-left:-20px;font-size:20px;font-weight:200;color:#777;text-shadow:0 1px 0 #fff
 }
 
 .cafeLogo:hover
@@ -376,11 +384,16 @@ a.hover
   background-color:green; width:40px; height:30px; text-align:center; color:white
 }
 
-#sendMailDiv
+#sendMailDiv, #addHotelDiv, #addPhotoDiv, #addMenuDiv
 {
   width: 100%;
   height: 100%;
 
   padding-left: 120px;
   padding-top: 6%;
+}
+
+.divider
+{
+
 }

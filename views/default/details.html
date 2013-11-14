@@ -3,6 +3,11 @@
 
 <!-- Hotel information-->
 
+{{if len(request.vars) != 0:}}
+<div class="flash">{{=request.vars['flash'] or ''}}</div>
+{{session.showFlash=False}}
+{{pass}}
+
 <div id="detailsMain">
 
 <div class="clear"></div>
@@ -71,7 +76,7 @@
 <span id="ReviewsBlock" style="font-weight:bold; color:#660066">Reviews</span> &nbsp;&nbsp;&nbsp;&nbsp;<span><a class="linkDecor"  href="#photos">Photos</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span><a class="linkDecor"  href="#menuCard">Menu card</a></span>
 </div>
 </br>
-<div style="float:right"><a class="linkDecor"  href="#writeReview">Write a review</a></div>
+<div style="float:right; background-color:#CCCCFF; width:100px; text-align:center"><a class="linkDecor"  href="#writeReview">Write a review</a></div>
 <br/>
 <br/>
 {{for review in reviews:}}
@@ -90,7 +95,7 @@
     <div class="res-review-top-right">
         <div class="res-review-top-right-rating">
                 <div class="left" style="background: none repeat scroll 0% 0% rgb(237, 237, 237);">
-                <div class="right" itemprop="rating"><div class="small-rating level-7">{{=review.Review.rating}}</div></div>
+                <div class="right" itemprop="rating"><div class=" ratingValueBlock small-rating level-7">{{=review.Review.rating}}</div></div>
                 <div class="left" style="padding-right:20px;">
                     <div style="color: rgb(157, 157, 157); letter-spacing:-0.5px;padding-left: 10px; line-height:12px;font-size: 10px; padding-top: 6px; text-transform: uppercase;">Rated as</div>
                 </div>
@@ -99,7 +104,7 @@
         </div>
         <div class="clear"></div>
         <div class="res-review-top-right-text">
-                <span>{{=review.Review.time_of_post}}</span>
+                <span style="color:#8D3B3B">{{=review.Review.time_of_post}}</span>
                 <br/>
                 {{if auth.has_membership('moderator'):}}
     				<a class="linkDecor"  href={{=URL('deleteReview', args=[review.Review.hotel_id, review.Review.id])}}>Delete</a>
@@ -126,7 +131,7 @@
 </div>
 
 <div id="photos">
-    <p><b>Photos</b></p>
+    <div class="divider" style="margin-bottom:10px"><b>Photos</b></div>
     {{for image in images:}}
         <div class="imageDiv"><img class="hotelImage" src={{=URL('download', args=image.photo)}}></img></div>
     {{pass}}

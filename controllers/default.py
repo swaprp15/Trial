@@ -28,6 +28,7 @@ def index():
     session.hotelIds.append(1)
 
     response.flash=''
+    session.showFlash = False
 
     query = db.Advertisement.hotel_id == 2
     session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
@@ -290,6 +291,7 @@ def addHotel():
 
     if not auth.has_membership('moderator'):
         response.flash='Only moderators can add a new hotel information'
+        session.showFlash=True
         redirect(URL('index', vars=dict(flash='Only moderators can add a new hotel information')))
 
     newHotelForm = SQLFORM(db.Hotel_Info)

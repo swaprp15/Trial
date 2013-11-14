@@ -101,7 +101,7 @@ div.flash {
     vertical-align:middle;
     cursor:pointer;
     color:#fff;
-    background-color:#000;
+    background-color:red;
     border:2px solid #fff;
     border-radius:8px;
     -o-border-radius: 8px;

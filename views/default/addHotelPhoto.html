@@ -1,9 +1,15 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
 
+<div id="addPhotoDiv">
+
+<h3>Upload a photo here</h3>
+
 {{if 'photoForm' in globals():}}
 	{{=photoForm}}
 {{else:}}
 {{=BEAUTIFY(response._vars)}}
 {{pass}}
+
+</div>
 

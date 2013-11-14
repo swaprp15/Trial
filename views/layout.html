@@ -46,6 +46,7 @@
   response.files.insert(2,URL('static','css/bootstrap-responsive.min.css'))
   response.files.insert(3,URL('static','css/web2py_bootstrap.css'))
   response.files.insert(3,URL('static','css/cafeHunt.css'))
+    response.files.insert(3,URL('static','css/userdetails.css'))
   }}
 
   {{include 'web2py_ajax.html'}}
@@ -130,19 +131,29 @@
         {{session.lastUrl=request.url}}
 
         <div class="span3">
-            <div id="ad1">
-                <p><a href={{=URL('incrClicks', args=[session.hotelIds[0]])}} ><img src={{=URL('download', args=session.hotelPhotos[0].banner)}}></img></a></p><br/>    
-            </div>
+    	<table id="adRight">
+    	<tr><td>
+    	<div id="ad1">
+    	
+          <p><a href={{=URL('incrClicks', args=[session.hotelIds[0]])}} ><img src={{=URL('download', args=session.hotelPhotos[0].banner)}}></img></a></p><br/>    
+              </div>
+              </td></tr>
+              <tr><td>
             <div id="ad2">
               <p><a href={{=URL('incrClicks', args=[session.hotelIds[1]])}} ><img src={{=URL('download', args=session.hotelPhotos[1].banner)}}></img></a></p><br/>
             </div>
+            </td></tr>
+            <tr><td>
             <div id="ad3">
               <p><a href={{=URL('incrClicks', args=[session.hotelIds[2]])}} ><img src={{=URL('download', args=session.hotelPhotos[2].banner)}}></img></a></p><br/>
             </div>
+            </td></tr>
+            <tr><td>
             <div id="ad4">
-               <p><a href={{=URL('incrClicks', args=[session.hotelIds[3]])}} ><img src={{=URL('download', args=session.hotelPhotos[3].banner)}}></img></a></p><br/>
+               <p><a href={{=URL('incrClicks', args=[session.hotelIds[3]])}} ><img src={{=URL('download', args=session.hotelPhotos[3].banner)}}></img></a></p>
             </div>
-            
+            </td></tr>
+            </table>
         </div>
         {{end}}
         {{pass}}
@@ -164,7 +175,7 @@
         </footer>
     </div>
   -->
-  </div> --><!-- /container -->
+  </div><!-- /container -->
 
   <!-- The javascript =============================================
        (Placed at the end of the document so the pages load faster) -->

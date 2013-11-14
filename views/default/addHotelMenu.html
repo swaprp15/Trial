@@ -1,8 +1,15 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
 
-{{if 'photoForm' in globals():}}
+<div id="addMenuDiv">
+
+<h3>Upload a menu card here</h3>
+
+
+{{if 'menuForm' in globals():}}
 	{{=menuForm}}
 {{else:}}
 {{=BEAUTIFY(response._vars)}}
 {{pass}}
+
+</div>
