@@ -94,6 +94,12 @@ img.profilePic
   font-weight: bold;
 }
 
+.details-name > a:hover, .user-snippet-name > a:hover
+{
+  color: red;
+  text-decoration: none;
+}
+
 .search-name .top-res-box-name a {
   font-weight: bold;
 }
@@ -339,13 +345,21 @@ div.layoutIncludeBlock
     color: #660066;
 }
 
-a:hover
+a.hover
 {
-  background-color: #E0E0D1;
+  text-decoration: none;
+}
+
+.linkDecor:hover
+{
+  /*background-color: #E0E0D1;*/
   color: black;
   text-decoration: none;
+  font-weight: bold;
   webkit-transform: scale(2,2)
 }
+
+
 
 .cafeLogo
 {
@@ -360,4 +374,13 @@ a:hover
 .ratingValueBlock
 {
   background-color:green; width:40px; height:30px; text-align:center; color:white
+}
+
+#sendMailDiv
+{
+  width: 100%;
+  height: 100%;
+
+  padding-left: 120px;
+  padding-top: 6%;
 }

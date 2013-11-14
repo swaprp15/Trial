@@ -48,15 +48,15 @@
 	 </div>
 	 <div class="clear"></div>
 	 <div class="right search-details-reviews" style="">
-        <a href="#ReviewsBlock" class="search-result-reviews right" title="User reviews for Exotica">{{=details.no_of_reviewes}} reviews</a>
+        <a class="linkDecor" href="#ReviewsBlock" class="search-result-reviews right" title="User reviews for Exotica">{{=details.no_of_reviewes}} reviews</a>
         <span data-icon="r" class="right search-result-review-icon"></span>
     </br>
-    <a href={{=URL('sendMail')}}>Send via email</a>
+    <a class="linkDecor" href={{=URL('sendMail')}}>Send via email</a>
     </br>
     {{if auth.has_membership('moderator'):}}
-        <a href={{=URL('addHotelPhoto', args=[details.id])}}>Add a photo</a>
+        <a class="linkDecor"  href={{=URL('addHotelPhoto', args=[details.id])}}>Add a photo</a>
         </br>
-        <a href={{=URL('addHotelMenu', args=[details.id])}}>Add a menu card</a>
+        <a class="linkDecor"  href={{=URL('addHotelMenu', args=[details.id])}}>Add a menu card</a>
     {{pass}}
      </div>
      <div class="clear"></div>
@@ -68,10 +68,10 @@
 <div class="clear"></div>
 
 <div class="detailsSeparator">
-<span id="ReviewsBlock" style="font-weight:bold; color:#660066">Reviews</span> &nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#photos">Photos</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#menuCard">Menu card</a></span>
+<span id="ReviewsBlock" style="font-weight:bold; color:#660066">Reviews</span> &nbsp;&nbsp;&nbsp;&nbsp;<span><a class="linkDecor"  href="#photos">Photos</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span><a class="linkDecor"  href="#menuCard">Menu card</a></span>
 </div>
 </br>
-<div style="float:right"><a href="#writeReview">Write a review</a></div>
+<div style="float:right"><a class="linkDecor"  href="#writeReview">Write a review</a></div>
 <br/>
 <br/>
 {{for review in reviews:}}
@@ -99,14 +99,12 @@
         </div>
         <div class="clear"></div>
         <div class="res-review-top-right-text">
-                <a href="http://www.zomato.com/review/bbqMk" class="res-review-date">
-                <time itemprop="dtreviewed" datetime="2013-05-19 11:21:29">{{=review.Review.time_of_post}}</time>
-                </a>
+                <span>{{=review.Review.time_of_post}}</span>
                 <br/>
                 {{if auth.has_membership('moderator'):}}
-    				<a href={{=URL('deleteReview', args=[review.Review.hotel_id, review.Review.id])}}>Delete</a>
+    				<a class="linkDecor"  href={{=URL('deleteReview', args=[review.Review.hotel_id, review.Review.id])}}>Delete</a>
     				<br/>
-    				<a href={{=URL('editReview', args=[review.Review.hotel_id, review.Review.id])}}>Edit</a>
+    				<a class="linkDecor"  href={{=URL('editReview', args=[review.Review.hotel_id, review.Review.id])}}>Edit</a>
     				</br>
 				{{pass}}
 	     </div>

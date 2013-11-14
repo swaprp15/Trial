@@ -356,11 +356,11 @@ def makeModerator():
         request(URL('index'))
 
 def sendMail():
-    mailForm = FORM('Send this info via e-mail:',
-                    INPUT(_name='To', requiures=IS_EMAIL()),
-                    INPUT(_name='Subject', requiures=IS_NOT_EMPTY()),
-                    INPUT(_name='Body', requiures=IS_NOT_EMPTY()),
-                    INPUT(_type='submit'),
+    mailForm = FORM(TABLE(
+                    TR(TD(B('To')), TD(':'), TD(INPUT(_name='To', requiures=IS_EMAIL()))),
+                    TR(TD(B('Subject')), TD(':'), TD(INPUT(_name='Subject', requiures=IS_NOT_EMPTY()))),
+                    TR(TD(B('Body')), TD(':'), TD(INPUT(_name='Body', requiures=IS_NOT_EMPTY()))),
+                    TR(TD(), TD(), TD(INPUT(_type='submit', _value='Send')))),
                     submit_button='Send')
 
     mailForm.vars.Subject = 'Hotel information - ' + session.hotel_name
