@@ -20,6 +20,20 @@ div.restroType
   padding-top: 15%;
 
 }
+
+#detailsMain
+{
+  padding-left: 40px;
+  padding-top: 6%;
+}
+
+.detailsSeparator
+{
+  background-color: #E0CCE0;
+  padding-left: 10px;
+  text-transform: uppercase;;
+}
+
 #categoryDiv
 {
 	height: 150px;
@@ -74,6 +88,12 @@ img.profilePic
 .search-name .top-res-box-name {
   font-size: 18px;
 }
+
+.details-name {
+  font-size: 40px;
+  font-weight: bold;
+}
+
 .search-name .top-res-box-name a {
   font-weight: bold;
 }
@@ -163,6 +183,11 @@ img.profilePic
   line-height: 26px;
 }
 
+.review
+{
+  margin-bottom: 20px;
+}
+
 .res-review-top-right {
   float: right;
 }
@@ -179,6 +204,7 @@ img.profilePic
   line-height: 34px;
   width: 50px;
   font-size: 18px;
+  text-align:center
 }
 .res-review-top-right-text {
   color: #cbcbc8;
@@ -296,4 +322,27 @@ div.layoutIncludeBlock
 .span9
 {
   height: 480px;
+}
+
+.overallRating
+{
+  background-color: #FFCCFF;
+  height: 34px;
+  line-height: 34px;
+  width: 120px;
+  font-size: 18px;
+
+}
+
+.ratingText
+{
+    color: #660066;
+}
+
+a:hover
+{
+  background-color: #E0E0D1;
+  color: black;
+  text-decoration: none;
+  webkit-transform: scale(2,2)
 }

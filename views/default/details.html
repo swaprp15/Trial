@@ -8,7 +8,7 @@
 <div class="clear"></div>
 <div class="grid_8 pos-relative column alpha">
 	<div class="search-name">
-		<h3 class="top-res-box-name ln24 left"><a href={{=URL('details', args=[details.id])}}>{{=details.name}}</a></h3></br>
+		<h3 class="details-name ln24 left"><a href={{=URL('details', args=[details.id])}}>{{=details.name}}</a></h3></br>
 		<div class="clear"></div>
 		<div class="ln24" style="line-height: 26px;">
 			<span class="search-result-address">{{=details.address}}</span>
@@ -27,9 +27,22 @@
 	 <div class="search-result-stars ln24 clearfix">
 	 	<div class="right">
             <div class="rating-rank left">
-            	<div data-res-id="90744" class="rating-for-90744 rating-div left res-snippet-small-rating level-7">
-                                {{=details.overall_rating}}
-                            </div>
+            	<!--<div data-res-id="90744" class="overallRating" style="color: rgb(157, 157, 157); letter-spacing:-0.5px;padding-left: 10px; line-height:12px;font-size: 10px; padding-top: 6px; text-transform: uppercase;">
+                                <div class="ratingText left">Overall rating</div>
+                                <div class="right small-rating level-7">{{=details.overall_rating}}</div>
+                            </div>-->
+
+                        <div class="res-review-top-right-rating">
+                <div class="left" style="background: none repeat scroll 0% 0% rgb(237, 237, 237);">
+                <div class="right" itemprop="rating"><div class="small-rating level-7" style="background-color:green; color:white">{{=details.overall_rating}}</div></div>
+                <div class="left" style="padding-right:20px;">
+                    <div style="color: rgb(157, 157, 157); letter-spacing:-0.5px;padding-left: 10px; line-height:12px;font-size: 10px; padding-top: 6px; text-transform: uppercase;">Overall rating</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+
             </div>
         </div>
 	 </div>
@@ -54,9 +67,11 @@
 
 <div class="clear"></div>
 
-<span id="ReviewsBlock" style="font-weight:bold">Reviews</span> &nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#photos">Photos</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#menuCard">Menu card</a></span>
+<div class="detailsSeparator">
+<span id="ReviewsBlock" style="font-weight:bold; color:#660066">Reviews</span> &nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#photos">Photos</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#menuCard">Menu card</a></span>
+</div>
 </br>
-<a href="#writeReview">Write a review</a>
+<div style="float:right"><a href="#writeReview">Write a review</a></div>
 <br/>
 <br/>
 {{for review in reviews:}}
