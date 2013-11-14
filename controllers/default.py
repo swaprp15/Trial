@@ -199,7 +199,7 @@ def search():
 
         return dict(content=hotels, newSearchForm=newSearchForm, recommondations=recommondations, recommondationMessage=recommondationMessage)
         pass
-    elif request.args[0] == 'adavacedSearch':
+    elif request.args[0] == 'advancedSearch':
         # We have a dictionary here
         hotel_locality=session.advancedSearch['hotel_locality']
         type_of_food=session.advancedSearch['type_of_food']
@@ -506,6 +506,6 @@ def advancedSearch():
         for key in request.vars.keys():
             session.advancedSearch[key]=request.vars[key]
 
-        redirect(URL('search', args=['adavacedSearch']))
+        redirect(URL('search', args=['advancedSearch']))
 
     return dict()

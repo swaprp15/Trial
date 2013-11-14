@@ -4,7 +4,9 @@
 
 {{if 'content' in globals():}}
 
-{{if request.vars['key'] != '':}}
+{{if len(request.args) > 0 and request.args[0] == 'advancedSearch':}}
+	<h3>Advanced Search result for city {{=session.city}}:</h3>
+{{elif request.vars['key'] != '':}}
 <h3>Search result for : {{=request.vars['key']}}</h3>
 <h3>In {{=session.city}}:</h3>
 {{else:}}
@@ -23,6 +25,7 @@
 	{{=newSearchForm}}
 
 </div>
+<div>You may try our <a href={{=URL('advancedSearch')}}>Advanced Search</a></div>
 
 {{pass}}
 
@@ -110,7 +113,7 @@
 	 </div>
 	 <div class="clear"></div>
 	 <div class="right search-details-reviews" style="">
-        <a href="#" class="search-result-reviews right" title="User reviews for Exotica">{{=hotel.no_of_reviewes}} reviews</a>
+        <a href={{=URL('details', args=[hotel.id, 'GoToReviews'])}} class="search-result-reviews right" title="User reviews for Exotica">{{=hotel.no_of_reviewes}} reviews</a>
         <span data-icon="r" class="right search-result-review-icon"></span>
      </div>
      <div class="clear"></div>

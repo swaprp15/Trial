@@ -4,39 +4,43 @@
 <div id="addMenuDiv">
 
 <h3>Advanced search : </h3>
-<p>{{=vars}}</p>
 
 <form action={{=URL('advancedSearch')}} method="post">
 <table>
 <tr>
-	<td>Locality</td>
+	<td><b>Locality</b></td>
+	<td><b>:</b></td>
 	<td><input type="text" name="hotel_locality"></input></td>
 </tr>
 <tr>
-	<td>Type of food</td>
+	<td><b>Type of food</b></td>
+	<td><b>:</b></td>
 	<td><input type="text" name="type_of_food"></input></td>
 </tr>
 <tr>
 	<td>
-		Cost</br>
-		<input type="radio" name="cost" value="lesser">Less than</input>
-		<input type="radio" name="cost" value="greater">Greater than</input>
+		<b>Cost per 2 persons</br>
+		<input type="radio" name="cost" value="lesser"><b>Less than</b></input>
+		<input type="radio" name="cost" value="greater"><b>Greater than</b></input>
 	</td>
+	<td><b>:</b></td>
 	<td>
 		<input type="text" name="costValue"></input>
 	</td>
 </tr>
 <tr>
 	<td>
-		Rating</br>
-		<input type="radio" name="rating" value="lesser">Less than</input>
-		<input type="radio" name="rating" value="greater">Greater than</input>
+		<b>Rating</b></br>
+		<input type="radio" name="rating" value="lesser"><b>Less than</b></input>
+		<input type="radio" name="rating" value="greater"><b>Greater than</b></input>
 	</td>
+	<td><b>:</b></td>
 	<td>
 		<input type="text" name="ratingValue"></input>
 	</td>
 </tr>
 <tr>
+	<td></td>
 	<td></td>
 	<td><input type="submit" name="submit" value="submit"></input></td>
 </tr>
