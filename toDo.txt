@@ -3,12 +3,14 @@ Select hotel ids dynamically.. Take photo from Hotel_Info
 
 Advanced search
 
-increase the size of the ads banner
-
-add link to the review button in search page
-
 change color of rating according to value
 
 sendMail not validating properly
 
 logo - color
+
+ADd locality, type of food
+
+User should not be allowed to add more than one review.. But can edit his own...
+
+Recommondations should be given as order by rating and then show just 4

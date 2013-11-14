@@ -72,10 +72,11 @@ db.define_table('Hotel_Info',
           Field('name', requires = IS_NOT_EMPTY()),
           Field('address', requires = IS_NOT_EMPTY()),
           Field('city', requires = IS_NOT_EMPTY()),
+          Field('type_of_food', 'text', requires=IS_NOT_EMPTY()),
           Field('costPerTwo', 'decimal(10,2)', requires = IS_NOT_EMPTY()),
-          Field('hours'),
+          Field('hours', requires=IS_NOT_EMPTY()),
           Field('overall_rating', 'float', requires = IS_NOT_EMPTY()),
-          Field('no_of_reviewes', 'integer'))
+          Field('no_of_reviewes', 'integer', requires=IS_NOT_EMPTY()))
 
 
 db.define_table('Review',

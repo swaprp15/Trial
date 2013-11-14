@@ -176,7 +176,7 @@ def search():
         recommondationMessage='Our recommondations for you:'
 
         return dict(content=hotels, recommondations=recommondations, recommondationMessage=recommondationMessage)
-    else:
+    elif request.args[0] == 'noresult':
         # if earlier no results were found, do this is a new page... /search/noresult
 
         newSearchForm=FORM(INPUT(_name='keyword', requiures=IS_NOT_EMPTY(), _placeholder='Please enter hotel name'), INPUT(_type='submit', _value='Search'))
@@ -199,6 +199,70 @@ def search():
 
         return dict(content=hotels, newSearchForm=newSearchForm, recommondations=recommondations, recommondationMessage=recommondationMessage)
         pass
+    elif request.args[0] == 'adavacedSearch':
+        # We have a dictionary here
+        hotel_locality=session.advancedSearch['hotel_locality']
+        type_of_food=session.advancedSearch['type_of_food']
+        costValue=session.advancedSearch['costValue']
+        cost=session.advancedSearch['cost']
+        ratingValue=session.advancedSearch['ratingValue']
+        rating=session.advancedSearch['rating']
+
+        #(hotel_locality in str(db.Hotel_Info.address)) & (str(db.Hotel_Info.type_of_food).find(type_of_food) != -1) &
+
+        if cost == 'lesser':
+            if rating == 'lesser':
+                query=((db.Hotel_Info.costPerTwo < float(costValue)) & (db.Hotel_Info.overall_rating < float(ratingValue)) & (db.Hotel_Info.city == session.city))
+            else:
+                query=((db.Hotel_Info.costPerTwo < float(costValue)) & (db.Hotel_Info.overall_rating >= float(ratingValue)) & (db.Hotel_Info.city == session.city))
+        else:
+            if rating == 'lesser':
+                query=((db.Hotel_Info.costPerTwo >= float(costValue)) & (db.Hotel_Info.overall_rating < float(ratingValue)) & (db.Hotel_Info.city == session.city))
+            else:
+                query=((db.Hotel_Info.costPerTwo >= float(costValue)) & (db.Hotel_Info.overall_rating >= float(ratingValue)) & (db.Hotel_Info.city == session.city))
+
+        hotelsWithRequiredCostAndRating = db(query).select(db.Hotel_Info.id, db.Hotel_Info.address)
+
+        hotelIdsWithRequiredLocality = []
+
+        for record in hotelsWithRequiredCostAndRating:
+            if record.address.find(hotel_locality) != -1:
+                hotelIdsWithRequiredLocality.append(record.id)
+
+
+        #addresses = db(db.Hotel_Info.id in hotelsWithRequiredCostAndRating).select(db.Hotel_Info.address, db.Hotel_Info.id)
+
+        typesOfFood = {}
+
+        for hotel_id in hotelIdsWithRequiredLocality:
+            record = db(db.Hotel_Info.id == hotel_id).select(db.Hotel_Info.type_of_food)
+            if len(record) > 0 :
+                typesOfFood[hotel_id] = record[0].type_of_food
+
+
+        finalListOfHotelIds = []
+
+        for hotel_id in typesOfFood.keys():
+            if typesOfFood[hotel_id].find(type_of_food) != -1:
+                finalListOfHotelIds.append(hotel_id)
+
+        hotels = []
+
+        for hotel_id in finalListOfHotelIds:
+            rows = db(db.Hotel_Info.id == hotel_id).select(db.Hotel_Info.ALL)
+            if len(rows) > 0:
+                hotels.append(rows[0])
+        #response.flash = len(hotels)
+
+
+
+        if len(hotels) == 0:
+            response.flash = 'Sorry no hotels found of your interest in city ' + session.city
+
+            redirect(URL('search', args=['noresult'], vars=dict(key=request.vars['key'])))
+        
+
+        return dict(content=hotels, recommondations=[])
 
 
 @auth.requires_login()
@@ -322,7 +386,10 @@ def deleteReview():
         if newNoOfReviews == 0:
             newRating = 0
         else:
-            newRating = (currentRating - int(reviewRating)/1.0)/newNoOfReviews
+            newRating = (currentRating*currentNoOfReviews - int(reviewRating[0].rating)/1.0)/newNoOfReviews
+
+        if newRating < 0:
+            newRating = 0;
 
         db(db.Hotel_Info.id == session.hotel_id).update(overall_rating=newRating, no_of_reviewes=newNoOfReviews)
 
@@ -429,3 +496,16 @@ def incrClicks():
     db(db.Advertisement.hotel_id==hotelId).update(clicks=nclicks)
     # redirect to original page
     redirect(URL('details', args=[request.args[0]]))
+
+def advancedSearch():
+
+    session.advancedSearch={}
+
+    if request.vars.submit == 'submit':
+
+        for key in request.vars.keys():
+            session.advancedSearch[key]=request.vars[key]
+
+        redirect(URL('search', args=['adavacedSearch']))
+
+    return dict()
