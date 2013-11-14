@@ -169,9 +169,19 @@ def search():
 
         # Add few recommondations
 
-        query = ((db.Hotel_Info.overall_rating >= 4.0) & (db.Hotel_Info.city == session.city))
+        query = ((db.Hotel_Info.city == session.city))
 
-        recommondations = db(query).select(db.Hotel_Info.ALL)
+        records = db(query).select(db.Hotel_Info.ALL, orderby=~db.Hotel_Info.overall_rating)
+
+        i=0
+
+        recommondations = []
+
+        for record in records:
+            if i > 3:
+                break
+            recommondations.append(record)
+            i += 1 
 
         recommondationMessage='Our recommondations for you:'
 
@@ -190,10 +200,19 @@ def search():
 
         hotels = []
 
-        query = ((db.Hotel_Info.overall_rating >= 4.0) & (db.Hotel_Info.city == session.city))
+        query = ((db.Hotel_Info.city == session.city))
 
-        recommondations = db(query).select(db.Hotel_Info.ALL)
+        records = db(query).select(db.Hotel_Info.ALL)
 
+        recommondations = []
+
+        i = 0
+
+        for record in records:
+            if i > 3:
+                break
+            recommondations.append(record)
+            i += 1
 
         recommondationMessage='Or you may try our recommondations:'
 

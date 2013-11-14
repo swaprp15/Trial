@@ -50,11 +50,33 @@ def _():
     if session.city == None:
         session.city = 'Hyderabad'
 
+    '''
     response.menu += [
         (SPAN(session.city, _class='highlighted'), False, URL('index'), [
         (T('Hyderabad'), False, URL('index', args=['changeCity', 'Hyderabad'])),
         (T('Pune'), False, URL('index', args=['changeCity', 'Pune'])),
         (T('Mumbai'), False, URL('index', args=['changeCity', 'Mumbai']))])]
+
+    '''
+
+
+    query = db.Hotel_Info.id > 0
+
+    cities = db(query).select(db.Hotel_Info.city, distinct=True)
+
+    menuList = []
+
+    for city in cities:
+        t = (T(city.city), False, URL('index', args=['changeCity', city.city]))
+        menuList.append(t)
+
+    L = [
+        (T('Hyderabad'), False, URL('index', args=['changeCity', 'Hyderabad'])),
+        (T('Pune'), False, URL('index', args=['changeCity', 'Pune'])),
+        (T('Mumbai'), False, URL('index', args=['changeCity', 'Mumbai']))]
+
+    response.menu += [
+        (SPAN(session.city, _class='highlighted'), False, URL('index'), menuList)]
 
     response.menu += [(SPAN('Add', _class='highlighted'), False, URL('index'), [
         (T('Hotel'), False, URL('addHotel'))])]

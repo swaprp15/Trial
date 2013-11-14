@@ -1,7 +1,5 @@
 
-Select hotel ids dynamically.. Take photo from Hotel_Info
-
-Advanced search
+Modify Hotel_Info to take photo from Hotel_Info -- Check with Ganga
 
 change color of rating according to value
 
@@ -9,8 +7,6 @@ sendMail not validating properly
 
 logo - color
 
-ADd locality, type of food
+Add proper type of food
 
 User should not be allowed to add more than one review.. But can edit his own...
-
-Recommondations should be given as order by rating and then show just 4
