@@ -269,66 +269,118 @@ def search():
         pass
     elif request.args[0] == 'advancedSearch':
         # We have a dictionary here
+
+        
+        '''
+        keywords = request.vars
+        keys = request.vars.keys()
+
+        if ('cost' not in keys) or  ('rating' not in keys) or (keywords['costValue'] == '') or (keywords['ratingValue'] == '') :
+            message = 'At least provide preferences for cost and rating'
+            redirect(URL('advancedSearch', vars={'flash':'At least provide preferences for cost and rating'}))
+
+        try:
+            val = int(keywords['costValue'])
+            val = int(keywords['ratingValue'])
+        except ValueError:
+            redirect(URL('advancedSearch', vars={'flash':'Please provide numeric value for cost and rating'}))
+
+        if int(keywords['costValue']) < 0 or int(keywords['ratingValue']) < 0:
+            redirect(URL('advancedSearch', vars={'flash':'Please provide non-negative for cost and rating'}))
+
+        '''
+
         hotel_locality=session.advancedSearch['hotel_locality']
         type_of_food=session.advancedSearch['type_of_food']
-        costValue=session.advancedSearch['costValue']
-        cost=session.advancedSearch['cost']
-        ratingValue=session.advancedSearch['ratingValue']
-        rating=session.advancedSearch['rating']
+
+        if 'cost' not in session.advancedSearch.keys():
+            cost = ''
+            costValue = ''
+        else:
+            cost=session.advancedSearch['cost']
+            costValue=session.advancedSearch['costValue']
+        
+        if 'rating' not in session.advancedSearch.keys():
+            rating = ''
+            ratingValue=''
+        else:
+            rating=session.advancedSearch['rating']
+            ratingValue=session.advancedSearch['ratingValue']
+        
 
         #(hotel_locality in str(db.Hotel_Info.address)) & (str(db.Hotel_Info.type_of_food).find(type_of_food) != -1) &
+        
+        hotelsIdsWithReqCriteria = []
 
-        if cost == 'lesser':
-            if rating == 'lesser':
-                query=((db.Hotel_Info.costPerTwo < float(costValue)) & (db.Hotel_Info.overall_rating < float(ratingValue)) & (db.Hotel_Info.city == session.city))
+        if cost != '' and costValue != '':
+            if cost == 'lesser':
+                query=((db.Hotel_Info.costPerTwo < float(costValue)) & (db.Hotel_Info.city == session.city))
             else:
-                query=((db.Hotel_Info.costPerTwo < float(costValue)) & (db.Hotel_Info.overall_rating >= float(ratingValue)) & (db.Hotel_Info.city == session.city))
-        else:
+                query=((db.Hotel_Info.costPerTwo >= float(costValue)) & (db.Hotel_Info.city == session.city))
+
+            rows = db(query).select(db.Hotel_Info.id)
+
+            for row in rows:
+                hotelsIdsWithReqCriteria.append(row.id)
+
+
+        if rating != '' and ratingValue != '':
             if rating == 'lesser':
-                query=((db.Hotel_Info.costPerTwo >= float(costValue)) & (db.Hotel_Info.overall_rating < float(ratingValue)) & (db.Hotel_Info.city == session.city))
+                query=((db.Hotel_Info.overall_rating < float(ratingValue)) & (db.Hotel_Info.city == session.city))
             else:
-                query=((db.Hotel_Info.costPerTwo >= float(costValue)) & (db.Hotel_Info.overall_rating >= float(ratingValue)) & (db.Hotel_Info.city == session.city))
+                query=((db.Hotel_Info.overall_rating >= float(ratingValue)) & (db.Hotel_Info.city == session.city))
 
-        hotelsWithRequiredCostAndRating = db(query).select(db.Hotel_Info.id, db.Hotel_Info.address)
+            rows = db(query).select(db.Hotel_Info.id)
 
-        hotelIdsWithRequiredLocality = []
+            for row in rows:
+                hotelsIdsWithReqCriteria.append(row.id)
 
-        for record in hotelsWithRequiredCostAndRating:
-            if record.address.find(hotel_locality) != -1:
-                hotelIdsWithRequiredLocality.append(record.id)
+
+        
+        if hotel_locality != '':
+            rows = db(db.Hotel_Info.id > 0).select(db.Hotel_Info.id, db.Hotel_Info.address)
+
+            for row in rows:
+                if row.address.lower().find(hotel_locality.lower()) != -1:
+                    hotelsIdsWithReqCriteria.append(row.id)
 
 
         #addresses = db(db.Hotel_Info.id in hotelsWithRequiredCostAndRating).select(db.Hotel_Info.address, db.Hotel_Info.id)
 
-        typesOfFood = {}
+        if type_of_food != '':
+            rows = db(db.Hotel_Info.id > 0).select(db.Hotel_Info.id, db.Hotel_Info.type_of_food)
 
-        for hotel_id in hotelIdsWithRequiredLocality:
-            record = db(db.Hotel_Info.id == hotel_id).select(db.Hotel_Info.type_of_food)
-            if len(record) > 0 :
-                typesOfFood[hotel_id] = record[0].type_of_food
+            for row in rows:
+                if row.type_of_food.lower().find(type_of_food.lower()) != -1:
+                    hotelsIdsWithReqCriteria.append(row.id)
 
+        #response.flash = len(hotels)
 
-        finalListOfHotelIds = []
-
-        for hotel_id in typesOfFood.keys():
-            if typesOfFood[hotel_id].find(type_of_food) != -1:
-                finalListOfHotelIds.append(hotel_id)
+        '''
 
         hotels = []
 
-        for hotel_id in finalListOfHotelIds:
-            rows = db(db.Hotel_Info.id == hotel_id).select(db.Hotel_Info.ALL)
-            if len(rows) > 0:
-                hotels.append(rows[0])
-        #response.flash = len(hotels)
+        query=(((db.Hotel_Info.costPerTwo < float(costValue)) | (db.Hotel_Info.overall_rating < float(ratingValue))) & (db.Hotel_Info.city == session.city))
 
+        result = db(query).select(db.Hotel_Info.id)
 
+        for item in result:
+            hotels.append(item.id)
 
-        if len(hotels) == 0:
+        '''
+
+        hotels = []
+
+        if len(hotelsIdsWithReqCriteria) == 0:
             response.flash = 'Sorry no hotels found of your interest in city ' + session.city
 
             redirect(URL('search', args=['noresult'], vars=dict(key=request.vars['key'])))
-        
+        else:
+            for hotel_id in hotelsIdsWithReqCriteria:
+                rows = db(db.Hotel_Info.id == hotel_id).select()
+
+                if len(rows) > 0:
+                    hotels.append(rows[0])
 
         return dict(content=hotels, recommondations=[])
 
@@ -666,22 +718,35 @@ def advancedSearch():
     session.advancedSearch={}
 
     if request.vars.submit == 'Search':
-
+        
         keywords = request.vars
         keys = request.vars.keys()
 
+        '''
         if ('cost' not in keys) or  ('rating' not in keys) or (keywords['costValue'] == '') or (keywords['ratingValue'] == '') :
             message = 'At least provide preferences for cost and rating'
             redirect(URL('advancedSearch', vars={'flash':'At least provide preferences for cost and rating'}))
 
+        '''
+
         try:
-            val = int(keywords['costValue'])
-            val = int(keywords['ratingValue'])
+            if 'cost' in keys:
+                val = float(keywords['costValue'])
+                if float(keywords['costValue']) < 0:
+                    redirect(URL('advancedSearch', vars={'flash':'Please provide non-negative for cost'}))
+
+            if 'rating' in keys:
+                val = float(keywords['ratingValue'])
+                if float(keywords['ratingValue']) < 0:
+                    redirect(URL('advancedSearch', vars={'flash':'Please provide non-negative for rating'}))
+
         except ValueError:
             redirect(URL('advancedSearch', vars={'flash':'Please provide numeric value for cost and rating'}))
 
-        if int(keywords['costValue']) < 0 or int(keywords['ratingValue']) < 0:
-            redirect(URL('advancedSearch', vars={'flash':'Please provide non-negative for cost and rating'}))
+
+
+        if (keywords['hotel_locality']== '') and (keywords['type_of_food'] == '') and ('cost' not in keys) and ('rating' not in keys):
+            redirect(URL('advancedSearch', vars={'flash':'Please provide at least one crieteria'}))
 
         for key in request.vars.keys():
             session.advancedSearch[key]=request.vars[key]
