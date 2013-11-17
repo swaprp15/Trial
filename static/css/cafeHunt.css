@@ -384,7 +384,7 @@ a.hover
   background-color:green; width:40px; height:30px; text-align:center; color:white
 }
 
-#sendMailDiv, #addHotelDiv, #addPhotoDiv, #addMenuDiv
+#sendMailDiv, #addHotelDiv, #addPhotoDiv, #addMenuDiv, #editReviewDiv
 {
   width: 100%;
   height: 100%;

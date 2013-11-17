@@ -2,6 +2,7 @@
 {{extend 'layout.html'}}
 
 <div id="addMenuDiv">
+
 {{if len(request.vars) > 0 and 'flash' in request.vars.keys():}}	
 <div class="flash">{{=request.vars['flash']}}</div>
 {{pass}}
@@ -44,7 +45,7 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td><input type="submit" name="submit" value="submit"></input></td>
+	<td><input type="submit" name="submit" value="Search"></input></td>
 </tr>
 </table>
 </form>

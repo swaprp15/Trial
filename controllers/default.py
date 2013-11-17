@@ -10,6 +10,10 @@
 #########################################################################
 
 
+import sample
+
+print sample.CONSTANT
+
 def index():
     """
     example action using the internationalization operator T and flash
@@ -292,6 +296,17 @@ def details():
 
     session.hotel_id = request.args[0]
 
+    query = ((db.Review.user_id == auth.user_id) & (db.Review.hotel_id == session.hotel_id))
+
+    result = db(query).select(db.Review.id)
+
+    alreadySubmittedAReview = False
+
+    if len(result) > 0:
+        alreadySubmittedAReview = True
+
+
+
     #addReviewForm=FORM(INPUT(_name='description', requiures=IS_NOT_EMPTY(), _placeholder='What\'s your opinion?'), INPUT(_type='submit', _value='Post it..'), INPUT(_type='reset', _value='reset'))
 
     addReviewForm=SQLFORM(db.Review, fields=['rating', 'description'], submit_button='Post')
@@ -354,7 +369,7 @@ def details():
     session.hotel_hours = hotels[0].hours
     session.url = request.url
 
-    return dict(details=hotels[0], reviews=reviews, addReviewForm=addReviewForm, images=images, menus=menus)
+    return dict(details=hotels[0], reviews=reviews, addReviewForm=addReviewForm, images=images, menus=menus, alreadySubmittedAReview=alreadySubmittedAReview)
 
 def userDetails():
     userId = request.args[0]
@@ -464,9 +479,45 @@ def editReview():
                 redirect(URL('index'))
 
 
-        editForm=crud.update(db.Review, request.args[1], fields=['rating', 'description'])
+        query = db.Review.id == request.args[1]
+        reviewDetails = db(query).select(db.Review.rating, db.Review.description, db.Review.hotel_id)
+
+        if len(reviewDetails) <= 0:
+            redirect(URL('details', args=[request.args[0]]))
+
+        hotel_id = reviewDetails[0].hotel_id
+        currentReviewRating = reviewDetails[0].rating
+        currentReviewDescription = reviewDetails[0].description
+
+        editForm = FORM(TABLE(TR(TD(LABEL('Rating')), TD(INPUT(_type='text', _name='rating', requires=IS_IN_SET([1,2,3,4,5]))), LABEL('Please enter value between 1 to 5')), TR(TD(LABEL('Description')), TD(TEXTAREA(_name='description', requires=IS_NOT_EMPTY()))), TR(TD(), TD(INPUT(_type='submit', _value='Update')))))
+
+        editForm.vars.rating = currentReviewRating
+        editForm.vars.description = currentReviewDescription
+
+        if editForm.process().accepted :
+             # Update the overall rating of this hotel.
+            row = db(db.Hotel_Info.id == hotel_id).select(db.Hotel_Info.overall_rating, db.Hotel_Info.no_of_reviewes)
+            currentRating = row[0].overall_rating
+            noOfReviews = row[0].no_of_reviewes
+
+            import decimal
+
+            newRating = (currentRating*noOfReviews - int(currentReviewRating)/1.0)
+
+            newRating += float(editForm.vars.rating)
+
+            newRating = newRating/noOfReviews
+
+            if newRating < 0:
+                newRating = 0;
+
+            db(db.Hotel_Info.id == session.hotel_id).update(overall_rating=newRating)
+
+            db(db.Review.id == request.args[1]).update(description=editForm.vars.description, rating=editForm.vars.rating)
+
+        #editForm=crud.update(db.Review, request.args[1], fields=['rating', 'description'])
         #redirect(URL('details', args=[request.args[0]]))
-        return dict(editForm=editForm)
+        return dict(editForm=editForm, hotelId=session.hotel_id)
     elif len(request.args) == 1:
         redirect(URL('details', args=[request.args[0]]))
     else:
@@ -484,6 +535,9 @@ def makeModerator():
         redirect(URL('index'))
 
 def sendMail():
+
+    hotelId = session.hotel_id
+
     mailForm = FORM(TABLE(
                     TR(TD(B('To')), TD(':'), TD(INPUT(_name='To', requiures=IS_EMAIL()))),
                     TR(TD(B('Subject')), TD(':'), TD(INPUT(_name='Subject', requiures=IS_NOT_EMPTY()))),
@@ -503,7 +557,7 @@ def sendMail():
         redirect(URL('details', args=[session.hotel_id]))
     
 
-    return dict(mailForm=mailForm)
+    return dict(mailForm=mailForm, hotelId=hotelId)
 
 def addHotelPhoto():
 
@@ -523,7 +577,7 @@ def addHotelPhoto():
         response.flash = 'Please correct the errors'
     else:
         response.flash = 'Please fill out the form'
-    return dict(photoForm=photoForm)
+    return dict(photoForm=photoForm, hotelId=hotelId)
 
 
 def addHotelMenu():
@@ -543,7 +597,7 @@ def addHotelMenu():
         response.flash = 'Please correct the errors'
     else:
         response.flash = 'Please fill out the form'
-    return dict(menuForm=menuForm)
+    return dict(menuForm=menuForm, hotelId=hotelId)
 
 def incrClicks():
     hotelId = request.args[0]
@@ -559,7 +613,7 @@ def incrClicks():
 def advancedSearch():
     session.advancedSearch={}
 
-    if request.vars.submit == 'submit':
+    if request.vars.submit == 'Search':
 
         keywords = request.vars
         keys = request.vars.keys()

@@ -127,7 +127,12 @@
 
 <div id="writeReviewBlock">
 <p id="writeReview"><b>Write a review</b></p>
+
+{{if alreadySubmittedAReview == True :}}
+    <p>Sorry, you cannot write a review as you have already written once.</p>
+{{else:}}
 {{=addReviewForm}}
+{{pass}}
 </div>
 
 <div id="photos">
