@@ -34,14 +34,20 @@ def index():
 	 
 	num=random.randint(1,numOfAds)
 	query = db.Advertisement.id == num
+	print num 	
+	"""if not db(query).select(db.Advertisement.id)[0]:"""
+	res = db(query).select(db.Advertisement.id)
 	
-	while not query:
-		num=random.randint(1,numOfAds)
-		query = db.Advertisement.id == num
+	while len(res) == 0:
+            num=random.randint(1,numOfAds)
+            query = db.Advertisement.id == num
+	       
+            res = db(query).select(db.Advertisement.id)
+	
 			     
 	while j < len(adId):
 		flag=False
-			
+		
 		if len(adId) == j:
 			break;
 			
@@ -50,11 +56,12 @@ def index():
 			
 			num=random.randint(1,numOfAds)
 			query = db.Advertisement.id == num
-	
-			while not query:
+			
+			while len(res) == 0:
 				num=random.randint(1,numOfAds)
 				query = db.Advertisement.id == num
-					
+				res = db(query).select(db.Advertisement.id)
+							
 			flag=True
 		else:
 				
@@ -63,26 +70,26 @@ def index():
 	if flag==False:
 			adId.append(num)
      
-   
+    print adId
         
     query = db.Advertisement.id == adId[0]
     session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
-    session.hotelIds.append(adId[0])
+    session.hotelIds.append(db(query).select(db.Advertisement.hotel_id)[0].hotel_id)
 
     response.flash=''
     session.showFlash = False
 
     query = db.Advertisement.id == adId[1]
     session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
-    session.hotelIds.append(adId[1])
+    session.hotelIds.append(db(query).select(db.Advertisement.hotel_id)[0].hotel_id)
     
     query = db.Advertisement.id == adId[2]
     session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
-    session.hotelIds.append(adId[2])
+    session.hotelIds.append(db(query).select(db.Advertisement.hotel_id)[0].hotel_id)
     
     query = db.Advertisement.id == adId[3]
     session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
-    session.hotelIds.append(adId[3])
+    session.hotelIds.append(db(query).select(db.Advertisement.hotel_id)[0].hotel_id)
     
 
     response.flash = T("Welcome CafeHunt!")
@@ -414,7 +421,7 @@ def userDetails():
 
     query = ((db.Review.user_id == userId) & (db.Review.hotel_id == db.Hotel_Info.id))
 
-    userReviews = db(query).select(db.Hotel_Info.name, db.Review.hotel_id, db.Review.description, db.Review.rating, db.Review.time_of_post, db.Review.id)
+    userReviews = db(query).select(db.Hotel_Info.name, db.Review.hotel_id, db.Review.description, db.Review.rating, db.Review.time_of_post, db.Review.id, db.Review.user_id)
 
     query = db.auth_user.id == userId
 
@@ -485,7 +492,14 @@ def deleteReview():
 
         db(db.Hotel_Info.id == session.hotel_id).update(overall_rating=newRating, no_of_reviewes=newNoOfReviews)
 
-        redirect(URL('details', args=[request.args[0]]))
+        #if len(request.vars) > 0 and 'redirect' in request.vars.keys() and request.vars['redirect'] == True:
+        #    pass
+        #else:
+
+        if request.vars['redirect'] == 'False':  
+            redirect(session.last_url)
+        else:
+            redirect(URL('details', args=[request.args[0]]))
     elif len(request.args) == 1:
         redirect(URL('details', args=[request.args[0]]))
     else:

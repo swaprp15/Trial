@@ -130,7 +130,7 @@ img.profilePic
   font-weight: bold;
 }
 
-.details-name > a:hover, .user-snippet-name > a:hover, .user-details-name > a:hover
+.details-name > a:hover, .user-snippet-name > a:hover, .user-details-name > a:hover, .top-res-box-name > a:hover
 {
   color: #700000;
   text-decoration: none;
@@ -363,7 +363,7 @@ div.menuImage
 }
 #adRight{
 	position:absolute;
-	top:30%;
+	top:20%;
 	right:10%;
 
 }

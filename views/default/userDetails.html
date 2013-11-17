@@ -50,7 +50,8 @@
                 <span style="color:#8D3B3B">{{=review.Review.time_of_post}}</span>
                 <br/>
                 {{if auth.has_membership('moderator') or auth.user_id == review.Review.user_id:}}
-    				<a class="linkDecor"  href={{=URL('deleteReview', args=[review.Review.hotel_id, review.Review.id])}}>Delete</a>
+                {{session.last_url = request.url}}
+    				<a class="linkDecor"  href={{=URL('deleteReview', args=[review.Review.hotel_id, review.Review.id], vars=dict(redirect=False))}}>Delete</a>
     				<br/>
     				<a class="linkDecor"  href={{=URL('editReview', args=[review.Review.hotel_id, review.Review.id])}}>Edit</a>
     				</br>

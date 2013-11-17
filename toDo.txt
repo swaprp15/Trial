@@ -1,26 +1,22 @@
+Locality - case insencitive
 
-Add footer...
-logo - color -- #990033 reddish lavender
+Maps
 
+Advanced Search OR instrad of AND
 
-Deploy... python anywher
+Send via mai validation
+
+Add advertisement option for moderator
+
+Sent by - user name via Cafe Hunt
+
+Go bak to revs is in the middle of images
 
 Lost password
 
 Properly style various forms..
 
-Review delete logic not working properly..
-
-Take advertisements from Zomato..
-
-Photo on the first page
-
-Modify Hotel_Info to take photo from Hotel_Info -- Check with Ganga
-
-
-sendMail not validating properly
-
-
+CafeHunt logo..
 
 change color of rating according to value
 
