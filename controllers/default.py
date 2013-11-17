@@ -8,11 +8,7 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 ## - call exposes all registered services (none by default)
 #########################################################################
-
-
-import sample
-
-print sample.CONSTANT
+import random
 
 def index():
     """
@@ -27,24 +23,66 @@ def index():
     
     session.hotelPhotos = []
     session.hotelIds = []
-    query = db.Advertisement.hotel_id == 1
+    
+    row = db(db.Advertisement.hotel_id!=None).select()
+    numOfAds=len(row)
+    adId=[]
+        
+    while len(adId) < 4 and len(adId)<numOfAds:
+	j=0
+	flag=False
+	 
+	num=random.randint(1,numOfAds)
+	query = db.Advertisement.id == num
+	
+	while not query:
+		num=random.randint(1,numOfAds)
+		query = db.Advertisement.id == num
+			     
+	while j < len(adId):
+		flag=False
+			
+		if len(adId) == j:
+			break;
+			
+		if num==adId[j]:
+			j=0
+			
+			num=random.randint(1,numOfAds)
+			query = db.Advertisement.id == num
+	
+			while not query:
+				num=random.randint(1,numOfAds)
+				query = db.Advertisement.id == num
+					
+			flag=True
+		else:
+				
+			j=j+1
+	
+	if flag==False:
+			adId.append(num)
+     
+   
+        
+    query = db.Advertisement.id == adId[0]
     session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
-    session.hotelIds.append(1)
+    session.hotelIds.append(adId[0])
 
     response.flash=''
     session.showFlash = False
 
-    query = db.Advertisement.hotel_id == 2
+    query = db.Advertisement.id == adId[1]
     session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
-    session.hotelIds.append(2)
+    session.hotelIds.append(adId[1])
     
-    query = db.Advertisement.hotel_id == 3
+    query = db.Advertisement.id == adId[2]
     session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
-    session.hotelIds.append(3)
+    session.hotelIds.append(adId[2])
     
-    query = db.Advertisement.hotel_id == 4
+    query = db.Advertisement.id == adId[3]
     session.hotelPhotos.append(db(query).select(db.Advertisement.banner)[0])
-    session.hotelIds.append(4)
+    session.hotelIds.append(adId[3])
     
 
     response.flash = T("Welcome CafeHunt!")
@@ -376,7 +414,7 @@ def userDetails():
 
     query = ((db.Review.user_id == userId) & (db.Review.hotel_id == db.Hotel_Info.id))
 
-    userReviews = db(query).select(db.Hotel_Info.name, db.Review.hotel_id, db.Review.description, db.Review.rating)
+    userReviews = db(query).select(db.Hotel_Info.name, db.Review.hotel_id, db.Review.description, db.Review.rating, db.Review.time_of_post, db.Review.id)
 
     query = db.auth_user.id == userId
 

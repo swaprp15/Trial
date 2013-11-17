@@ -2,6 +2,42 @@ div.restroType
 {
 	width: 100px;
 	height: 100px;
+	background-image: url("../images/biryani.jpg");
+
+	background-position:center;
+	background-color: yellow;
+	border: 1px solid black;
+	float: left;
+}
+#res2
+{
+	
+	background-image: url("../images/panipuri.jpeg");
+	width: 100px;
+	height: 100px;
+	background-position:center;
+	background-color: yellow;
+	border: 1px solid black;
+	float: left;
+}
+#res3
+{
+	width: 100px;
+	height: 100px;
+	background-image: url("../images/gulabjamun.jpg");
+	
+	background-position:center;
+	background-color: yellow;
+	border: 1px solid black;
+	float: left;
+}
+#res4
+{
+	
+	background-image: url("../images/coffee.jpeg");
+	background-position:center;
+	width: 100px;
+	height: 100px;
 	background-color: yellow;
 	border: 1px solid black;
 	float: left;
@@ -14,14 +50,14 @@ div.restroType
 	background-position:center;
 
   width: 100%;
-  height: 100%;
+  height: 80%;
 
   padding-left: 30px;
   padding-top: 15%;
 
 }
 
-#detailsMain
+#detailsMain, #userInfo, #userReviews
 {
   padding-left: 40px;
   padding-top: 6%;
@@ -94,7 +130,7 @@ img.profilePic
   font-weight: bold;
 }
 
-.details-name > a:hover, .user-snippet-name > a:hover
+.details-name > a:hover, .user-snippet-name > a:hover, .user-details-name > a:hover
 {
   color: #700000;
   text-decoration: none;
@@ -171,6 +207,16 @@ img.profilePic
   vertical-align: top;
 }
 
+.user-sub-details {
+  color: #660033;
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  padding-left: 50px;
+  float: left;
+  vertical-align: top;
+}
+
 .user-snippet-name {
   line-height: 16px;
   margin-left: 60px;
@@ -180,6 +226,18 @@ img.profilePic
   font-size: 16px;
   line-height: 16px;
 }
+
+.user-details-name
+{
+  line-height: 16px;
+  margin-left: 60px;
+}
+
+.user-details-name a {
+  font-size: 25px;
+  line-height: 16px;
+}
+
 
 .user-snippet-stats {
   text-transform: uppercase;
@@ -311,7 +369,7 @@ div.menuImage
 }
 
 #ad1,#ad2,#ad3,#ad4{
-    	width: 100px;
+    	width: 200px;
 	height: 100px;
 	background-color: grey;
 	border: 1px solid black;

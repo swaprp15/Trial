@@ -2,28 +2,69 @@
 {{extend 'layout.html'}}
 
 <div id="userInfo">
-	<img class="profilePic" src={{=URL('download', args=photo)}}></img>
-	<p><a href={{=id}}>{{=fname}} {{=lname}}</a></p>
-	{{if auth.has_membership('moderator', request.args[0]):}}
-		<span>Moderator</span>
-	{{else:}}
-		<span>Normal user</span>
-		</br>
-		<!-- If logged in user is moderator, show an option to make this user as moderator -->
-		{{if auth.has_membership('moderator'):}}
-			<a href={{=URL('makeModerator', args=[request.args[0]])}}>Make moderator</a>
-		{{pass}}
-	{{pass}}
-	<p>{{=len(userReviews)}} Reviews</p>
-</div>
 
+	<div class="user-snippet">
+        <div class="userImageDiv">
+            <img src={{=URL('download', args=photo)}} width="50px" height="50px"/>
+        </div>
+        <div class="user-details-name"><a href={{=id}}><b>{{=fname}} {{=lname}}</b></a>
+            </div>
+		<div class="user-sub-details left">
+				
+				{{if auth.has_membership('moderator', request.args[0]):}}
+					<span>Moderator</span>
+				{{else:}}
+					<span>Normal user</span>
+					</br>
+					<!-- If logged in user is moderator, show an option to make this user as moderator -->
+					{{if auth.has_membership('moderator'):}}
+						<a href={{=URL('makeModerator', args=[request.args[0]])}}>Make moderator</a>
+					{{pass}}
+				{{pass}}
+				<p>{{=len(userReviews)}} Reviews</p>	
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+
+<div id="userReviews">
 
 {{for review in userReviews :}}
 
-<div id="userReviews">
-	<span id="reviewForHotel">Name : <a href={{=URL('details', args=[review.Review.hotel_id])}}>{{=review.Hotel_Info.name}}</a></span></br>
-	<p>{{=review.Review.description}}</p></br>
-	<p>Rating : {{=review.Review.rating}}</p></br>
-</div>
+
+    <div class="review">
+    <div class="clear"></div>
+    <div class="user-snippet-name"><span id="reviewForHotel"><a class="linkDecor" href={{=URL('details', args=[review.Review.hotel_id])}}><b>{{=review.Hotel_Info.name}}</b></a></span></br></div>
+    <div class="res-review-top-right">
+        <div class="res-review-top-right-rating">
+                <div class="left" style="background: none repeat scroll 0% 0% rgb(237, 237, 237);">
+                <div class="right" itemprop="rating"><div class=" ratingValueBlock small-rating level-7">{{=review.Review.rating}}</div></div>
+                <div class="left" style="padding-right:20px;">
+                    <div style="color: rgb(157, 157, 157); letter-spacing:-0.5px;padding-left: 10px; line-height:12px;font-size: 10px; padding-top: 6px; text-transform: uppercase;">Rated as</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="res-review-top-right-text">
+                <span style="color:#8D3B3B">{{=review.Review.time_of_post}}</span>
+                <br/>
+                {{if auth.has_membership('moderator') or auth.user_id == review.Review.user_id:}}
+    				<a class="linkDecor"  href={{=URL('deleteReview', args=[review.Review.hotel_id, review.Review.id])}}>Delete</a>
+    				<br/>
+    				<a class="linkDecor"  href={{=URL('editReview', args=[review.Review.hotel_id, review.Review.id])}}>Edit</a>
+    				</br>
+				{{pass}}
+	     </div>
+    </div>
+    <div data-review-id="201219" class="res-review-body clearfix" style="float:left; clear:left">
+        <div class="reviewDescription">
+            <p itemprop="description">{{=review.Review.description}}</p>
+        </div>
+    </div>
+    <div class="clear"></div>
+    </div>
 </br>
 {{pass}}
+
+</div>

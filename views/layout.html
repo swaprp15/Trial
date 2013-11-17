@@ -67,15 +67,7 @@
   {{block head}}{{end}}
 </head>
 
-<body style="background: rgb(149,149,149); /* Old browsers */
-background: -moz-linear-gradient(-45deg,  rgba(149,149,149,1) 0%, rgba(63,63,63,1) 20%, rgba(147,147,147,1) 34%, rgba(63,63,63,1) 44%, rgba(107,107,107,1) 50%, rgba(53,53,53,1) 58%, rgba(86,86,86,1) 67%, rgba(78,78,78,1) 77%, rgba(56,56,56,1) 89%, rgba(27,27,27,1) 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(149,149,149,1)), color-stop(20%,rgba(63,63,63,1)), color-stop(34%,rgba(147,147,147,1)), color-stop(44%,rgba(63,63,63,1)), color-stop(50%,rgba(107,107,107,1)), color-stop(58%,rgba(53,53,53,1)), color-stop(67%,rgba(86,86,86,1)), color-stop(77%,rgba(78,78,78,1)), color-stop(89%,rgba(56,56,56,1)), color-stop(100%,rgba(27,27,27,1))); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(-45deg,  rgba(149,149,149,1) 0%,rgba(63,63,63,1) 20%,rgba(147,147,147,1) 34%,rgba(63,63,63,1) 44%,rgba(107,107,107,1) 50%,rgba(53,53,53,1) 58%,rgba(86,86,86,1) 67%,rgba(78,78,78,1) 77%,rgba(56,56,56,1) 89%,rgba(27,27,27,1) 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(-45deg,  rgba(149,149,149,1) 0%,rgba(63,63,63,1) 20%,rgba(147,147,147,1) 34%,rgba(63,63,63,1) 44%,rgba(107,107,107,1) 50%,rgba(53,53,53,1) 58%,rgba(86,86,86,1) 67%,rgba(78,78,78,1) 77%,rgba(56,56,56,1) 89%,rgba(27,27,27,1) 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(-45deg,  rgba(149,149,149,1) 0%,rgba(63,63,63,1) 20%,rgba(147,147,147,1) 34%,rgba(63,63,63,1) 44%,rgba(107,107,107,1) 50%,rgba(53,53,53,1) 58%,rgba(86,86,86,1) 67%,rgba(78,78,78,1) 77%,rgba(56,56,56,1) 89%,rgba(27,27,27,1) 100%); /* IE10+ */
-background: linear-gradient(135deg,  rgba(149,149,149,1) 0%,rgba(63,63,63,1) 20%,rgba(147,147,147,1) 34%,rgba(63,63,63,1) 44%,rgba(107,107,107,1) 50%,rgba(53,53,53,1) 58%,rgba(86,86,86,1) 67%,rgba(78,78,78,1) 77%,rgba(56,56,56,1) 89%,rgba(27,27,27,1) 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', endColorstr='#1b1b1b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-">
+<body style="">
   <!-- Navbar ================================================== -->
   <div class="navbar navbar-inverse">
     <!--<div class="flash">{{=response.flash or ''}}</div>-->
@@ -143,22 +135,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', end
     	<tr><td>
     	<div id="ad1">
     	
-          <p><a href={{=URL('incrClicks', args=[session.hotelIds[0]])}} ><img src={{=URL('download', args=session.hotelPhotos[0].banner)}}></img></a></p><br/>    
+          <p><a href={{=URL('incrClicks', args=[session.hotelIds[0]])}} ><img style="border:0;width:200px;height:100px" src={{=URL('download', args=session.hotelPhotos[0].banner)}}></img></a></p><br/>    
               </div>
               </td></tr>
               <tr><td>
             <div id="ad2">
-              <p><a href={{=URL('incrClicks', args=[session.hotelIds[1]])}} ><img src={{=URL('download', args=session.hotelPhotos[1].banner)}}></img></a></p><br/>
+              <p><a href={{=URL('incrClicks', args=[session.hotelIds[1]])}} ><img style="border:0;width:200px;height:100px" src={{=URL('download', args=session.hotelPhotos[1].banner)}}></img></a></p><br/>
             </div>
             </td></tr>
             <tr><td>
             <div id="ad3">
-              <p><a href={{=URL('incrClicks', args=[session.hotelIds[2]])}} ><img src={{=URL('download', args=session.hotelPhotos[2].banner)}}></img></a></p><br/>
+              <p><a href={{=URL('incrClicks', args=[session.hotelIds[2]])}} ><img style="border:0;width:200px;height:100px" src={{=URL('download', args=session.hotelPhotos[2].banner)}}></img></a></p><br/>
             </div>
             </td></tr>
             <tr><td>
             <div id="ad4">
-               <p><a href={{=URL('incrClicks', args=[session.hotelIds[3]])}} ><img src={{=URL('download', args=session.hotelPhotos[3].banner)}}></img></a></p>
+               <p><a href={{=URL('incrClicks', args=[session.hotelIds[3]])}} ><img style="border:0;width:200px;height:100px" src={{=URL('download', args=session.hotelPhotos[3].banner)}}></img></a></p>
             </div>
             </td></tr>
             </table>
@@ -181,8 +173,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', end
                 {{end}}
             </div>
         </footer>
-    </div>
-  -->
+    </div> -->
+
   </div><!-- /container -->
 
   <!-- The javascript =============================================
